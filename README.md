@@ -1,4 +1,4 @@
-# spotify-auth
+# Quarantunes
 
 ## Project setup
 ```

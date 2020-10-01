@@ -1,5 +1,5 @@
 {
-  "name": "spotify-auth",
+  "name": "quarantunes",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,8 +8,15 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.20.0",
+    "buefy": "^0.9.3",
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "d3": "^6.2.0",
+    "dotenv": "^8.2.0",
+    "fs": "0.0.1-security",
+    "jquery": "^3.5.1",
+    "vue": "^2.6.11",
+    "vue-axios": "^2.1.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

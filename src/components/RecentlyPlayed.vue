@@ -1,24 +1,16 @@
 <template>
   <div class="columns">
     <div class="column">
-      <div v-if="recentlyPlayed" class="box">
-        <p class="heading subtitle is-size-6">Most Recently Played</p>
-        <a
-          target="_blank"
-          v-bind:href="mostRecentTrack.track.external_urls.spotify"
-        >
-          <img
-            class="album-cover"
-            v-bind:src="mostRecentTrack.track.album.images[0].url"
-          />
-        </a>
-        <p class="heading is-size-4 title">
-          {{ mostRecentTrack.track.name }}
-        </p>
-        <p class="heading is-size-6 subtitle">
-          By {{ mostRecentTrack.track.artists[0].name }}
-        </p>
-      </div>
+      <ContentBox
+        v-if="recentlyPlayed"
+        :title="'Most Recently Played'"
+        :imageSrc="mostRecentTrack.track.album.images[0].url"
+        :previewUrl="mostRecentTrack.preview_url"
+        :spotifyUrl="mostRecentTrack.track.external_urls.spotify"
+        :trackName="mostRecentTrack.track.name"
+        :artistName="mostRecentTrack.track.artists[0].name"
+        :type="'track'"
+      />
     </div>
   </div>
 </template>
@@ -29,12 +21,16 @@ import Vue from "vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import * as d3 from "d3";
+import ContentBox from "./ContentBox.vue";
 
 Vue.use(VueAxios, axios);
 
 export default {
   name: "Artists",
   props: ["token"],
+  components: {
+    ContentBox,
+  },
   data() {
     return {
       recentlyPlayed: null,

@@ -2,62 +2,40 @@
   <div>
     <div class="columns">
       <div class="column">
-        <div v-if="topTracks" class="box">
-          <p class="heading subtitle is-size-6">Your Favorite Track</p>
-          <a target="_blank" v-bind:href="favoriteTrack.external_urls.spotify">
-            <img
-              class="album-cover"
-              v-bind:src="favoriteTrack.album.images[0].url"
-            />
-          </a>
-          <p class="heading is-size-4 title">
-            {{ favoriteTrack.name }}
-          </p>
-          <p class="heading is-size-6 subtitle">
-            By {{ favoriteTrack.album.artists[0].name }}
-          </p>
-        </div>
+        <ContentBox
+          v-if="topTracks"
+          :title="'Your Favorite Track'"
+          :imageSrc="favoriteTrack.album.images[0].url"
+          :previewUrl="favoriteTrack.preview_url"
+          :spotifyUrl="favoriteTrack.external_urls.spotify"
+          :trackName="favoriteTrack.name"
+          :artistName="favoriteTrack.album.artists[0].name"
+          :type="'track'"
+        />
       </div>
       <div class="column">
-        <div v-if="topTracks" class="box">
-          <p class="heading subtitle is-size-6">Your Most Underground Track</p>
-          <a
-            target="_blank"
-            v-bind:href="undergroundTrack.external_urls.spotify"
-          >
-            <img
-              class="album-cover"
-              v-bind:src="undergroundTrack.album.images[0].url"
-            />
-          </a>
-          <p class="heading is-size-4 title">
-            {{ undergroundTrack.name }}
-          </p>
-          <p class="heading is-size-6 subtitle">
-            By {{ undergroundTrack.album.artists[0].name }}
-          </p>
-        </div>
+        <ContentBox
+          v-if="topTracks"
+          :title="'Your Most Underground Track'"
+          :spotifyUrl="undergroundTrack.external_urls.spotify"
+          :imageSrc="undergroundTrack.album.images[0].url"
+          :previewUrl="undergroundTrack.preview_url"
+          :trackName="undergroundTrack.name"
+          :artistName="undergroundTrack.album.artists[0].name"
+          :type="'track'"
+        />
       </div>
       <div class="column">
-        <div v-if="topTracks" class="box">
-          <p class="heading subtitle is-size-6">Your Most Mainstream Track</p>
-
-          <a
-            target="_blank"
-            v-bind:href="mainstreamTrack.external_urls.spotify"
-          >
-            <img
-              class="album-cover"
-              v-bind:src="mainstreamTrack.album.images[0].url"
-            />
-          </a>
-          <p class="heading is-size-4 title">
-            {{ mainstreamTrack.name }}
-          </p>
-          <p class="heading is-size-6 subtitle">
-            By {{ mainstreamTrack.album.artists[0].name }}
-          </p>
-        </div>
+        <ContentBox
+          v-if="topTracks"
+          :title="'Your Most Mainstream Track'"
+          :spotifyUrl="mainstreamTrack.external_urls.spotify"
+          :imageSrc="mainstreamTrack.album.images[0].url"
+          :previewUrl="mainstreamTrack.preview_url"
+          :trackName="mainstreamTrack.name"
+          :artistName="mainstreamTrack.album.artists[0].name"
+          :type="'track'"
+        />
       </div>
     </div>
   </div>
@@ -65,16 +43,15 @@
 
 <script>
 import $ from "jquery";
-import Vue from "vue";
-import axios from "axios";
-import VueAxios from "vue-axios";
 import * as d3 from "d3";
-
-Vue.use(VueAxios, axios);
+import ContentBox from "./ContentBox.vue";
 
 export default {
   name: "Tracks",
   props: ["token"],
+  components: {
+    ContentBox,
+  },
   data() {
     return {
       topTracks: null,
@@ -98,7 +75,6 @@ export default {
       });
       return self.topTracks;
     },
-    commaFormat: d3.format(","),
   },
   computed: {
     favoriteTrack: function () {
@@ -150,11 +126,5 @@ li {
 }
 a {
   color: #42b983;
-}
-
-.album-cover {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
 }
 </style>

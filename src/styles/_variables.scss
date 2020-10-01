@@ -1,0 +1,36 @@
+@import "~bulma/sass/utilities/_all";
+
+// @import url('https://fonts.googleapis.com/css2?family=Proxima+Nova&display=swap');
+
+$family-primary: 'Proxima Nova',
+sans-serif;
+
+// Set your colors
+$primary: white;
+$primary-invert: findColorInvert($primary);
+$twitter: #4099FF;
+$twitter-invert: findColorInvert($twitter);
+$spotify: #1DB954;
+$spotify-invert: findColorInvert($spotify);
+$spotify-black: #191414;
+
+// Setup $colors to use as bulma classes (e.g. 'is-twitter')
+$colors: ("white": ($white, $black),
+  "black": ($black, $white),
+  "light": ($light, $light-invert),
+  "dark": ($dark, $dark-invert),
+  "primary": ($primary, $primary-invert),
+  "info": ($info, $info-invert),
+  "success": ($success, $success-invert),
+  "warning": ($warning, $warning-invert),
+  "danger": ($danger, $danger-invert),
+  "twitter": ($twitter, $twitter-invert));
+
+// Links
+$link: $primary;
+$link-invert: $primary-invert;
+$link-focus-border: $primary;
+
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";

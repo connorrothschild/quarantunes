@@ -2,62 +2,40 @@
   <div>
     <div class="columns">
       <div class="column">
-        <div v-if="topArtists" class="box">
-          <p class="heading subtitle is-size-6">Your Favorite Artist</p>
-          <a target="_blank" v-bind:href="favoriteArtist.external_urls.spotify">
-            <img
-              class="album-cover"
-              v-bind:src="favoriteArtist.images[0].url"
-            />
-          </a>
-          <p class="heading is-size-4 title">
-            {{ favoriteArtist.name }}
-          </p>
-          <p class="heading is-size-6 subtitle">
-            {{ commaFormat(favoriteArtist.followers.total) }} followers
-          </p>
-        </div>
+        <ContentBox
+          v-if="topArtists"
+          :title="'Your Favorite Artist'"
+          :imageSrc="favoriteArtist.images[0].url"
+          :previewUrl="favoriteArtist.preview_url"
+          :spotifyUrl="favoriteArtist.external_urls.spotify"
+          :followerCount="favoriteArtist.followers.total"
+          :artistName="favoriteArtist.name"
+          :type="'artist'"
+        />
       </div>
       <div class="column">
-        <div v-if="topArtists" class="box">
-          <p class="heading subtitle is-size-6">Your Most Underground Artist</p>
-          <a
-            target="_blank"
-            v-bind:href="undergroundArtist.external_urls.spotify"
-          >
-            <img
-              class="album-cover"
-              v-bind:src="undergroundArtist.images[0].url"
-            />
-          </a>
-          <p class="heading is-size-4 title">
-            {{ undergroundArtist.name }}
-          </p>
-          <p class="heading is-size-6 subtitle">
-            {{ commaFormat(undergroundArtist.followers.total) }} followers
-          </p>
-        </div>
+        <ContentBox
+          v-if="topArtists"
+          :title="'Your Most Underground Artist'"
+          :imageSrc="undergroundArtist.images[0].url"
+          :previewUrl="undergroundArtist.preview_url"
+          :spotifyUrl="undergroundArtist.external_urls.spotify"
+          :followerCount="undergroundArtist.followers.total"
+          :artistName="undergroundArtist.name"
+          :type="'artist'"
+        />
       </div>
       <div class="column">
-        <div v-if="topArtists" class="box">
-          <p class="heading subtitle is-size-6">Your Most Mainstream Artist</p>
-
-          <a
-            target="_blank"
-            v-bind:href="mainstreamArtist.external_urls.spotify"
-          >
-            <img
-              class="album-cover"
-              v-bind:src="mainstreamArtist.images[0].url"
-            />
-          </a>
-          <p class="heading is-size-4 title">
-            {{ mainstreamArtist.name }}
-          </p>
-          <p class="heading is-size-6 subtitle">
-            {{ commaFormat(mainstreamArtist.followers.total) }} followers
-          </p>
-        </div>
+        <ContentBox
+          v-if="topArtists"
+          :title="'Your Most Mainstream Artist'"
+          :imageSrc="mainstreamArtist.images[0].url"
+          :previewUrl="mainstreamArtist.preview_url"
+          :spotifyUrl="mainstreamArtist.external_urls.spotify"
+          :followerCount="mainstreamArtist.followers.total"
+          :artistName="mainstreamArtist.name"
+          :type="'artist'"
+        />
       </div>
     </div>
   </div>
@@ -65,16 +43,15 @@
 
 <script>
 import $ from "jquery";
-import Vue from "vue";
-import axios from "axios";
-import VueAxios from "vue-axios";
 import * as d3 from "d3";
-
-Vue.use(VueAxios, axios);
+import ContentBox from "./ContentBox.vue";
 
 export default {
   name: "Artists",
   props: ["token"],
+  components: {
+    ContentBox,
+  },
   data() {
     return {
       topArtists: null,
@@ -98,7 +75,6 @@ export default {
       });
       return self.topArtists;
     },
-    commaFormat: d3.format(","),
   },
   computed: {
     favoriteArtist: function () {

@@ -1,12 +1,25 @@
 <template>
   <div id="app">
-    <p v-if="userInfo" class="title is-size-3">
-      {{ userInfo.display_name }}
-    </p>
-    <p class="subtitle is-size-3">Quarantunes</p>
-    <div v-if="!token" class="content">
-      <a v-bind:href="getUrl">Authorize Spotify</a>
+    <div v-if="userInfo" class="media ml-6 mb-6 vertical-center-content">
+      <div class="media-left">
+        <figure class="image is-96x96">
+          <img
+            class="profile-image"
+            v-if="userInfo"
+            v-bind:src="userInfo.images[0].url"
+          />
+        </figure>
+      </div>
+      <div class="media-content">
+        <p class="heading is-size-6">User</p>
+        <p class="is-size-3 has-text-weight-bold">
+          {{ userInfo.display_name }}
+        </p>
+      </div>
     </div>
+    <button v-if="!token" class="button">
+      <a v-bind:href="getUrl">Authorize Spotify</a>
+    </button>
     <Artists :token="token" />
     <Tracks :token="token" />
     <RecentlyPlayed :token="token" />
@@ -23,7 +36,7 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import * as d3 from "d3";
 import Buefy from "buefy";
-import "buefy/dist/buefy.css";
+import "./styles/_variables.scss";
 
 Vue.use(VueAxios, axios);
 
@@ -101,21 +114,49 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import "styles/variables";
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Proxima Nova, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
   margin-top: 60px;
 }
-
 a {
-  color: green;
+  color: $spotify;
+  &:hover {
+    color: darkgreen;
+  }
 }
 
-a:hover {
-  color: darkolivegreen;
+.box {
+  background: transparent;
+  text-align: center;
+}
+html {
+  // css unsupported
+  // background: rgb(24, 24, 24);
+  // spotify gradient
+  background: linear-gradient(
+    0deg,
+    rgba(24, 24, 24, 1) 0%,
+    rgba(24, 24, 24, 1) 75%,
+    rgba(64, 64, 64, 1) 100%
+  );
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+.title,
+.subtitle,
+p {
+  color: white;
+}
+
+.profile-image {
+  border-radius: 50%;
+}
+
+.vertical-center-content {
+  align-items: center;
 }
 </style>

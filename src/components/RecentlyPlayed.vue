@@ -5,7 +5,7 @@
         v-if="recentlyPlayed"
         :title="'Most Recently Played'"
         :imageSrc="mostRecentTrack.track.album.images[0].url"
-        :previewUrl="mostRecentTrack.preview_url"
+        :previewUrl="mostRecentTrack.track.preview_url"
         :spotifyUrl="mostRecentTrack.track.external_urls.spotify"
         :trackName="mostRecentTrack.track.name"
         :artistName="mostRecentTrack.track.artists[0].name"

@@ -6,7 +6,6 @@
           v-if="topArtists"
           :title="'Your Favorite Artist'"
           :imageSrc="favoriteArtist.images[0].url"
-          :previewUrl="favoriteArtist.preview_url"
           :spotifyUrl="favoriteArtist.external_urls.spotify"
           :followerCount="favoriteArtist.followers.total"
           :artistName="favoriteArtist.name"
@@ -18,7 +17,6 @@
           v-if="topArtists"
           :title="'Your Most Underground Artist'"
           :imageSrc="undergroundArtist.images[0].url"
-          :previewUrl="undergroundArtist.preview_url"
           :spotifyUrl="undergroundArtist.external_urls.spotify"
           :followerCount="undergroundArtist.followers.total"
           :artistName="undergroundArtist.name"
@@ -30,7 +28,6 @@
           v-if="topArtists"
           :title="'Your Most Mainstream Artist'"
           :imageSrc="mainstreamArtist.images[0].url"
-          :previewUrl="mainstreamArtist.preview_url"
           :spotifyUrl="mainstreamArtist.external_urls.spotify"
           :followerCount="mainstreamArtist.followers.total"
           :artistName="mainstreamArtist.name"
@@ -55,6 +52,7 @@ export default {
   data() {
     return {
       topArtists: null,
+      topArtistTrack: null,
     };
   },
   methods: {
@@ -75,6 +73,24 @@ export default {
       });
       return self.topArtists;
     },
+    // getTopArtistsTracks: function () {
+    //   var self = this;
+    //   $.ajax({
+    //     url:
+    //       "https://api.spotify.com/v1/artists/" +
+    //       this.favoriteArtist.id +
+    //       "/top-tracks?country=US",
+    //     type: "GET",
+    //     async: false,
+    //     headers: {
+    //       Authorization: "Bearer " + this.token,
+    //     },
+    //   }).then(function (response) {
+    //     console.log(response);
+    //     self.topArtistTrack = response.tracks[0];
+    //   });
+    //   return self.topArtistTrack;
+    // },
   },
   computed: {
     favoriteArtist: function () {
@@ -104,6 +120,7 @@ export default {
   },
   mounted() {
     this.getTopArtists();
+    // this.getTopArtistsTracks();
   },
 };
 </script>

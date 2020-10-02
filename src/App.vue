@@ -1,5 +1,10 @@
 <template>
   <div id="app">
+    <div class="has-text-centered">
+      <button v-if="!token" class="button is-size-3">
+        <a v-bind:href="getUrl">Authorize Spotify</a>
+      </button>
+    </div>
     <div v-if="userInfo" class="media ml-6 mb-6 vertical-center-content">
       <div class="media-left">
         <figure class="image is-96x96">
@@ -17,9 +22,6 @@
         </p>
       </div>
     </div>
-    <button v-if="!token" class="button">
-      <a v-bind:href="getUrl">Authorize Spotify</a>
-    </button>
     <Artists :token="token" />
     <Tracks :token="token" />
     <RecentlyPlayed :token="token" />

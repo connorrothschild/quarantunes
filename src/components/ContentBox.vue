@@ -1,14 +1,20 @@
 <template>
   <div class="box">
     <p class="heading subtitle is-size-6">{{ title }}</p>
-    <img
-      class="album-cover"
-      v-bind:src="imageSrc"
-      @mouseover="hovered = true"
-      @mouseleave="hovered = false"
-      :class="{ hovered: hovered }"
-      @click="playSound(previewUrl)"
-    />
+    <div v-if="type == 'artist'">
+      <img class="album-cover" v-bind:src="imageSrc" />
+    </div>
+
+    <div v-if="type == 'track'">
+      <img
+        class="album-cover"
+        v-bind:src="imageSrc"
+        @mouseover="hovered = true"
+        @mouseleave="hovered = false"
+        :class="{ hovered: hovered }"
+        @click="playSound(previewUrl)"
+      />
+    </div>
 
     <div v-if="type == 'track'">
       <p class="heading is-size-4 title">
@@ -52,18 +58,21 @@ export default {
   data() {
     return {
       hovered: false,
+      isPlaying: false,
     };
   },
-  computed: {
-    // hasSlot() {
-    //   return !!this.$slots.default;
-    // },
-  },
+  computed: {},
   methods: {
     playSound(sound) {
-      if (sound) {
-        var audio = new Audio(sound);
+      var audio = new Audio(sound);
+      if (this.isPlaying) {
+        audio.pause();
+        this.isPlaying = false;
+        console.log("Should be paused: ", audio.paused);
+      } else {
         audio.play();
+        this.isPlaying = true;
+        console.log("Should be paused: ", audio.paused);
       }
     },
     commaFormat: d3.format(","),

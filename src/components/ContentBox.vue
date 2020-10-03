@@ -1,40 +1,57 @@
 <template>
   <div class="box">
-    <p class="heading subtitle is-size-6">{{ title }}</p>
     <div v-if="type == 'artist'">
-      <img class="album-cover" v-bind:src="imageSrc" />
+      <figure class="image is-square">
+        <img class="album-cover" v-bind:src="imageSrc" />
+      </figure>
     </div>
 
     <div v-if="type == 'track'">
-      <img
+      <!-- <img
         class="album-cover"
         v-bind:src="imageSrc"
         @mouseover="hovered = true"
         @mouseleave="hovered = false"
         :class="{ hovered: hovered }"
         @click="playSound(previewUrl)"
-      />
-    </div>
-
-    <div v-if="type == 'track'">
-      <p class="heading is-size-4 title">
-        <a target="_blank" v-bind:href="spotifyUrl">
-          {{ trackName }}
-        </a>
-      </p>
-
-      <p class="heading is-size-6 subtitle">By {{ artistName }}</p>
+      /> -->
+      <figure class="image is-square">
+        <img
+          class="album-cover"
+          v-bind:src="imageSrc"
+          @mouseover="hovered = true"
+          @mouseleave="hovered = false"
+          :class="{ hovered: hovered }"
+        />
+      </figure>
+      <!-- <audio controls>
+        <source :src="previewUrl" type="audio/mpeg" />
+      </audio> -->
     </div>
 
     <div v-if="type == 'artist'">
-      <p class="heading is-size-4 title">
+      <p class="is-size-4 title greyed mt-3">
         <a target="_blank" v-bind:href="spotifyUrl">
           {{ artistName }}
         </a>
       </p>
 
-      <p class="heading is-size-6 subtitle">
+      <p class="heading is-size-7 subtitle greyed">
+        {{ title }} <br />
         {{ commaFormat(followerCount) }} followers
+      </p>
+    </div>
+
+    <div v-if="type == 'track'">
+      <p class="is-size-4 title greyed mt-3">
+        <a target="_blank" v-bind:href="spotifyUrl">
+          {{ trackName }}
+        </a>
+      </p>
+
+      <p class="heading is-size-7 subtitle greyed">
+        {{ title }} <br />
+        By {{ artistName }}
       </p>
     </div>
   </div>
@@ -59,20 +76,23 @@ export default {
     return {
       hovered: false,
       isPlaying: false,
+      // sound: null,
     };
   },
   computed: {},
   methods: {
     playSound(sound) {
       var audio = new Audio(sound);
-      if (this.isPlaying) {
+      if (this.isPlaying == sound) {
         audio.pause();
         this.isPlaying = false;
         console.log("Should be paused: ", audio.paused);
+        console.log(this.isPlaying);
       } else {
         audio.play();
-        this.isPlaying = true;
+        this.isPlaying = sound;
         console.log("Should be paused: ", audio.paused);
+        console.log(this.isPlaying);
       }
     },
     commaFormat: d3.format(","),
@@ -82,13 +102,19 @@ export default {
 
 <style scoped>
 .album-cover {
-  width: 100px;
-  height: 100px;
   object-fit: cover;
 }
 
 .hovered {
   filter: brightness(0.6);
   cursor: pointer;
+}
+
+.greyed {
+  color: #c7c7c7;
+}
+
+.box {
+  padding: 0;
 }
 </style>

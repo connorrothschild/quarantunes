@@ -1,18 +1,14 @@
 <template>
-  <div class="columns">
-    <div class="column">
-      <ContentBox
-        v-if="recentlyPlayed"
-        :title="'Most Recently Played'"
-        :imageSrc="mostRecentTrack.track.album.images[0].url"
-        :previewUrl="mostRecentTrack.track.preview_url"
-        :spotifyUrl="mostRecentTrack.track.external_urls.spotify"
-        :trackName="mostRecentTrack.track.name"
-        :artistName="mostRecentTrack.track.artists[0].name"
-        :type="'track'"
-      />
-    </div>
-  </div>
+  <ContentBox
+    v-if="recentlyPlayed"
+    :title="'Most Recently Played'"
+    :imageSrc="mostRecentTrack.track.album.images[0].url"
+    :previewUrl="mostRecentTrack.track.preview_url"
+    :spotifyUrl="mostRecentTrack.track.external_urls.spotify"
+    :trackName="mostRecentTrack.track.name"
+    :artistName="mostRecentTrack.track.artists[0].name"
+    :type="'track'"
+  />
 </template>
 
 <script>
@@ -85,11 +81,5 @@ li {
 }
 a {
   color: #42b983;
-}
-
-.album-cover {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
 }
 </style>

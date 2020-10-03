@@ -1,39 +1,48 @@
 <template>
-  <div>
-    <div class="columns">
-      <div class="column">
-        <ContentBox
-          v-if="topArtists"
-          :title="'Your Favorite Artist'"
-          :imageSrc="favoriteArtist.images[0].url"
-          :spotifyUrl="favoriteArtist.external_urls.spotify"
-          :followerCount="favoriteArtist.followers.total"
-          :artistName="favoriteArtist.name"
-          :type="'artist'"
-        />
-      </div>
-      <div class="column">
-        <ContentBox
-          v-if="topArtists"
-          :title="'Your Most Underground Artist'"
-          :imageSrc="undergroundArtist.images[0].url"
-          :spotifyUrl="undergroundArtist.external_urls.spotify"
-          :followerCount="undergroundArtist.followers.total"
-          :artistName="undergroundArtist.name"
-          :type="'artist'"
-        />
-      </div>
-      <div class="column">
-        <ContentBox
-          v-if="topArtists"
-          :title="'Your Most Mainstream Artist'"
-          :imageSrc="mainstreamArtist.images[0].url"
-          :spotifyUrl="mainstreamArtist.external_urls.spotify"
-          :followerCount="mainstreamArtist.followers.total"
-          :artistName="mainstreamArtist.name"
-          :type="'artist'"
-        />
-      </div>
+  <div class="columns is-1">
+    <div class="column">
+      <ContentBox
+        v-if="topArtists"
+        :title="'Favorite Artist'"
+        :imageSrc="favoriteArtist.images[0].url"
+        :spotifyUrl="favoriteArtist.external_urls.spotify"
+        :followerCount="favoriteArtist.followers.total"
+        :artistName="favoriteArtist.name"
+        :type="'artist'"
+      />
+    </div>
+    <div class="column">
+      <ContentBox
+        v-if="topArtists"
+        :title="'Most Underground Artist'"
+        :imageSrc="undergroundArtist.images[0].url"
+        :spotifyUrl="undergroundArtist.external_urls.spotify"
+        :followerCount="undergroundArtist.followers.total"
+        :artistName="undergroundArtist.name"
+        :type="'artist'"
+      />
+    </div>
+    <div class="column">
+      <ContentBox
+        v-if="topArtists"
+        :title="'Most Mainstream Artist'"
+        :imageSrc="mainstreamArtist.images[0].url"
+        :spotifyUrl="mainstreamArtist.external_urls.spotify"
+        :followerCount="mainstreamArtist.followers.total"
+        :artistName="mainstreamArtist.name"
+        :type="'artist'"
+      />
+    </div>
+    <div class="column">
+      <ContentBox
+        v-if="topArtists"
+        :title="'Placeholder'"
+        :imageSrc="mainstreamArtist.images[0].url"
+        :spotifyUrl="mainstreamArtist.external_urls.spotify"
+        :followerCount="mainstreamArtist.followers.total"
+        :artistName="mainstreamArtist.name"
+        :type="'artist'"
+      />
     </div>
   </div>
 </template>
@@ -140,11 +149,5 @@ li {
 }
 a {
   color: #42b983;
-}
-
-.album-cover {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
 }
 </style>

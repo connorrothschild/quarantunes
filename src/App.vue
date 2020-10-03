@@ -1,19 +1,29 @@
 <template>
   <div id="app">
-    <div class="has-text-centered">
-      <button v-if="!token" class="button is-size-3">
-        <a v-bind:href="getUrl">Authorize Spotify</a>
+    <div v-if="!userInfo" class="full-page-centered">
+      <button class="button is-size-3 is-spotify">
+        <a :href="getUrl">Authorize Spotify</a>
       </button>
     </div>
-    <div v-if="userInfo" class="media ml-6 mb-6 vertical-center-content">
+
+    <Dropdown
+      v-if="userInfo"
+      :spotifyUrl="userInfo.external_urls.spotify"
+      :imageSrc="userInfo.images[0].url"
+      :name="userInfo.display_name"
+    />
+
+    <div v-if="userInfo" class="media mb-4 vertical-center-content">
       <div class="media-left">
-        <figure class="image is-96x96">
-          <img
-            class="profile-image"
-            v-if="userInfo"
-            v-bind:src="userInfo.images[0].url"
-          />
-        </figure>
+        <a :href="userInfo.external_urls.spotify">
+          <figure class="image is-96x96">
+            <img
+              class="image is-rounded"
+              v-if="userInfo"
+              :src="userInfo.images[0].url"
+            />
+          </figure>
+        </a>
       </div>
       <div class="media-content">
         <p class="heading is-size-6">User</p>
@@ -22,9 +32,23 @@
         </p>
       </div>
     </div>
-    <Artists :token="token" />
-    <Tracks :token="token" />
-    <RecentlyPlayed :token="token" />
+    <div v-if="userInfo" class="main-content">
+      <div class="tabs">
+        <ul>
+          <li class="is-active"><a>Overview</a></li>
+          <li><a>Mood</a></li>
+          <li><a>Recommendations</a></li>
+        </ul>
+      </div>
+      <div class="title is-size-5 mb-0">My Quarantine Artists</div>
+      <hr class="spotify-line" />
+      <Artists :token="token" />
+      <br />
+      <div class="title is-size-5 mb-0">My Quarantine Tracks</div>
+      <hr class="spotify-line" />
+      <Tracks :token="token" />
+      <!-- <RecentlyPlayed :token="token" /> -->
+    </div>
   </div>
 </template>
 
@@ -32,6 +56,8 @@
 import Artists from "./components/Artists.vue";
 import Tracks from "./components/Tracks.vue";
 import RecentlyPlayed from "./components/RecentlyPlayed.vue";
+import Dropdown from "./components/Dropdown.vue";
+
 import $ from "jquery";
 import Vue from "vue";
 import axios from "axios";
@@ -53,6 +79,7 @@ export default {
     Artists,
     Tracks,
     RecentlyPlayed,
+    Dropdown,
   },
   data() {
     return {
@@ -90,6 +117,10 @@ export default {
       });
       return self.userInfo;
     },
+    onAuth: function () {
+      this.getAccessToken();
+      this.getUserInfo();
+    },
     commaFormat: d3.format(","),
   },
   computed: {
@@ -105,9 +136,6 @@ export default {
       return self.url;
     },
   },
-  // created: function () {
-  //   this.getUrl();
-  // },
   created: function () {
     // this.getUrl();
     this.getAccessToken();
@@ -122,22 +150,22 @@ export default {
   font-family: Proxima Nova, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin-top: 60px;
+  margin-top: 10px;
 }
-a {
-  color: $spotify;
-  &:hover {
-    color: darkgreen;
-  }
-}
+// a {
+//   color: $spotify;
+//   &:hover {
+//     color: darkgreen;
+//   }
+// }
 
 .box {
   background: transparent;
-  text-align: center;
 }
 html {
-  // css unsupported
-  // background: rgb(24, 24, 24);
+  padding: 2.5%;
+  // if css unsupported:
+  background: rgb(24, 24, 24);
   // spotify gradient
   background: linear-gradient(
     0deg,
@@ -145,20 +173,35 @@ html {
     rgba(24, 24, 24, 1) 75%,
     rgba(64, 64, 64, 1) 100%
   );
+  // fix weird repeating bug
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
+
+body,
 .title,
 .subtitle,
 p {
   color: white;
 }
-
-.profile-image {
-  border-radius: 50%;
-}
-
 .vertical-center-content {
   align-items: center;
+}
+
+.spotify-line {
+  background-color: grey;
+  margin: 0.5rem 0 1rem 0;
+  height: 0.5px;
+}
+
+.tabs {
+  text-transform: uppercase;
+}
+
+.full-page-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
 }
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="columns">
+    <div class="columns is-1">
       <div class="column">
         <ContentBox
           v-if="topTracks"
-          :title="'Your Favorite Track'"
+          :title="'Favorite Track'"
           :imageSrc="favoriteTrack.album.images[0].url"
           :previewUrl="favoriteTrack.preview_url"
           :spotifyUrl="favoriteTrack.external_urls.spotify"
@@ -16,7 +16,7 @@
       <div class="column">
         <ContentBox
           v-if="topTracks"
-          :title="'Your Most Underground Track'"
+          :title="'Most Underground Track'"
           :spotifyUrl="undergroundTrack.external_urls.spotify"
           :imageSrc="undergroundTrack.album.images[0].url"
           :previewUrl="undergroundTrack.preview_url"
@@ -28,7 +28,7 @@
       <div class="column">
         <ContentBox
           v-if="topTracks"
-          :title="'Your Most Mainstream Track'"
+          :title="'Most Mainstream Track'"
           :spotifyUrl="mainstreamTrack.external_urls.spotify"
           :imageSrc="mainstreamTrack.album.images[0].url"
           :previewUrl="mainstreamTrack.preview_url"
@@ -36,6 +36,9 @@
           :artistName="mainstreamTrack.album.artists[0].name"
           :type="'track'"
         />
+      </div>
+      <div class="column">
+        <RecentlyPlayed :token="token" />
       </div>
     </div>
   </div>
@@ -45,12 +48,14 @@
 import $ from "jquery";
 import * as d3 from "d3";
 import ContentBox from "./ContentBox.vue";
+import RecentlyPlayed from "./RecentlyPlayed.vue";
 
 export default {
   name: "Tracks",
   props: ["token"],
   components: {
     ContentBox,
+    RecentlyPlayed,
   },
   data() {
     return {

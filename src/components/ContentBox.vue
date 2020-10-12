@@ -15,14 +15,8 @@
         :class="{ hovered: hovered }"
         @click="playSound(previewUrl)"
       /> -->
-      <figure class="image is-square">
-        <img
-          class="album-cover"
-          v-bind:src="imageSrc"
-          @mouseover="hovered = true"
-          @mouseleave="hovered = false"
-          :class="{ hovered: hovered }"
-        />
+      <figure class="image is-square album-cover-container">
+        <img class="album-cover" v-bind:src="imageSrc" />
       </figure>
       <!-- <audio controls>
         <source :src="previewUrl" type="audio/mpeg" />
@@ -100,14 +94,37 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .album-cover {
   object-fit: cover;
 }
 
-.hovered {
-  filter: brightness(0.6);
-  cursor: pointer;
+.album-cover-container:hover {
+  &::before {
+    content: "\f04b";
+    font-family: FontAwesome;
+    color: white;
+    border: 1px solid white;
+    border-radius: 50%;
+    font-size: 35px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    border-radius: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+    cursor: pointer;
+  }
+
+  .album-cover {
+    filter: brightness(0.6);
+    cursor: pointer;
+  }
 }
 
 .greyed {

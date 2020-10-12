@@ -6,32 +6,12 @@
       </button>
     </div>
 
-    <Dropdown
+    <UserInfo
       v-if="userInfo"
       :spotifyUrl="userInfo.external_urls.spotify"
       :imageSrc="userInfo.images[0].url"
       :name="userInfo.display_name"
     />
-
-    <div v-if="userInfo" class="media mb-4 vertical-center-content">
-      <div class="media-left">
-        <a :href="userInfo.external_urls.spotify">
-          <figure class="image is-96x96">
-            <img
-              class="image is-rounded"
-              v-if="userInfo"
-              :src="userInfo.images[0].url"
-            />
-          </figure>
-        </a>
-      </div>
-      <div class="media-content">
-        <p class="heading is-size-6">User</p>
-        <p class="is-size-3 has-text-weight-bold">
-          {{ userInfo.display_name }}
-        </p>
-      </div>
-    </div>
     <div v-if="userInfo" class="main-content">
       <div class="tabs">
         <ul>
@@ -47,7 +27,7 @@
       <div class="title is-size-5 mb-0">My Quarantine Tracks</div>
       <hr class="spotify-line" />
       <Tracks :token="token" />
-      <!-- <RecentlyPlayed :token="token" /> -->
+      <RecentlyPlayed :token="token" />
     </div>
   </div>
 </template>
@@ -56,7 +36,7 @@
 import Artists from "./components/Artists.vue";
 import Tracks from "./components/Tracks.vue";
 import RecentlyPlayed from "./components/RecentlyPlayed.vue";
-import Dropdown from "./components/Dropdown.vue";
+import UserInfo from "./components/UserInfo.vue";
 
 import $ from "jquery";
 import Vue from "vue";
@@ -79,7 +59,7 @@ export default {
     Artists,
     Tracks,
     RecentlyPlayed,
-    Dropdown,
+    UserInfo,
   },
   data() {
     return {
@@ -185,6 +165,7 @@ p {
   color: white;
 }
 .vertical-center-content {
+  display: flex;
   align-items: center;
 }
 

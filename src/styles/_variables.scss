@@ -14,6 +14,8 @@ $spotify: #1DB954;
 $spotify-invert: findColorInvert($spotify);
 $spotify-black: #191414;
 
+$white: white;
+
 // Setup $colors to use as bulma classes (e.g. 'is-twitter')
 $colors: ("white": ($white, $black),
   "black": ($black, $white),
@@ -38,6 +40,7 @@ $tabs-link-active-border-bottom-color: $spotify;
 
 // Dropdown
 $dropdown-content-background-color: transparent;
+$dropdown-item-color: white;
 
 // Import Bulma and Buefy styles
 @import "~bulma";

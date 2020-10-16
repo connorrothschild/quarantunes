@@ -42,6 +42,8 @@ $tabs-link-active-border-bottom-color: $spotify;
 $dropdown-content-background-color: transparent;
 $dropdown-item-color: white;
 
+$is-size-7: .5rem;
+
 // Import Bulma and Buefy styles
 @import "~bulma";
 @import "~buefy/src/scss/buefy";

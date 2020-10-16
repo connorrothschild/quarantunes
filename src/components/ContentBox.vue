@@ -24,26 +24,26 @@
     </div>
 
     <div v-if="type == 'artist'">
-      <p class="is-size-4 title greyed mt-3">
+      <p class="is-size-4 is-size-6-mobile title greyed mt-3">
         <a target="_blank" v-bind:href="spotifyUrl">
           {{ artistName }}
         </a>
       </p>
 
-      <p class="heading is-size-7 subtitle greyed">
+      <p class="heading is-size-7 is-size-8-mobile subtitle greyed">
         {{ title }} <br />
         {{ commaFormat(followerCount) }} followers
       </p>
     </div>
 
     <div v-if="type == 'track'">
-      <p class="is-size-4 title greyed mt-3">
+      <p class="is-size-4 is-size-6-mobile title greyed mt-3">
         <a target="_blank" v-bind:href="spotifyUrl">
           {{ trackName }}
         </a>
       </p>
 
-      <p class="heading is-size-7 subtitle greyed">
+      <p class="heading is-size-7 is-size-8-mobile subtitle greyed">
         {{ title }} <br />
         By {{ artistName }}
       </p>
@@ -133,5 +133,11 @@ export default {
 
 .box {
   padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .is-size-8-mobile {
+    font-size: .6rem !important;
+  }
 }
 </style>

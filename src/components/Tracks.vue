@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <div class="columns is-1">
+    <div class="columns is-1 is-variable is-mobile">
       <div class="column">
         <ContentBox
           v-if="topTracks"
@@ -41,7 +40,6 @@
         <RecentlyPlayed :token="token" />
       </div>
     </div>
-  </div>
 </template>
 
 <script>

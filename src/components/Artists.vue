@@ -1,5 +1,5 @@
 <template>
-  <div class="columns is-1">
+  <div class="columns is-1 is-variable is-mobile">
     <div class="column">
       <ContentBox
         v-if="topArtists"

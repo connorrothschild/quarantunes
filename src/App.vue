@@ -27,7 +27,7 @@
       <div class="title is-size-5 mb-0">My Quarantine Tracks</div>
       <hr class="spotify-line" />
       <Tracks :token="token" />
-      <RecentlyPlayed :token="token" />
+      <!-- <RecentlyPlayed :token="token" /> -->
     </div>
   </div>
 </template>
@@ -35,7 +35,6 @@
 <script>
 import Artists from "./components/Artists.vue";
 import Tracks from "./components/Tracks.vue";
-import RecentlyPlayed from "./components/RecentlyPlayed.vue";
 import UserInfo from "./components/UserInfo.vue";
 
 import $ from "jquery";
@@ -58,7 +57,6 @@ export default {
     // Auth,
     Artists,
     Tracks,
-    RecentlyPlayed,
     UserInfo,
   },
   data() {
@@ -147,15 +145,15 @@ html {
   // if css unsupported:
   background: rgb(24, 24, 24);
   // spotify gradient
-  background: linear-gradient(
-    0deg,
-    rgba(24, 24, 24, 1) 0%,
-    rgba(24, 24, 24, 1) 75%,
-    rgba(64, 64, 64, 1) 100%
-  );
-  // fix weird repeating bug
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  // background: linear-gradient(
+  //   0deg,
+  //   rgba(24, 24, 24, 1) 0%,
+  //   rgba(24, 24, 24, 1) 75%,
+  //   rgba(64, 64, 64, 1) 100%
+  // );
+  // // fix weird repeating bug
+  // background-repeat: no-repeat;
+  // background-attachment: fixed;
 }
 
 body,

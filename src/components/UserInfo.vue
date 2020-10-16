@@ -1,22 +1,7 @@
 <template>
-  <div class="level">
-    <div class="level-left">
-      <div class="media mb-4 vertical-center-content">
-        <div class="media-left">
-          <a :href="spotifyUrl">
-            <figure class="image is-96x96">
-              <img class="image is-rounded" :src="imageSrc" />
-            </figure>
-          </a>
-        </div>
-        <div class="media-content">
-          <p class="heading is-size-6">User</p>
-          <p class="is-size-3 has-text-weight-bold">
-            {{ name }}
-          </p>
-        </div>
-      </div>
-    </div>
+<div>
+  <div class="level is-mobile mb-0">
+    <div class="level-left"></div>
     <div class="level-right">
       <div class="level-item">
         <b-dropdown position="is-bottom-left" aria-role="list">
@@ -53,6 +38,26 @@
         </b-dropdown>
       </div>
     </div>
+  </div>
+  <div class="level is-mobile">
+    <div class="level-left">
+      <div class="media mb-4 vertical-center-content">
+        <div class="media-left">
+          <a :href="spotifyUrl">
+            <figure class="image is-96x96">
+              <img class="image is-rounded" :src="imageSrc" />
+            </figure>
+          </a>
+        </div>
+        <div class="media-content">
+          <p class="heading is-size-6">User</p>
+          <p class="is-size-3 has-text-weight-bold">
+            {{ name }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
   </div>
 
   <!-- <div class="dropdown is-right">

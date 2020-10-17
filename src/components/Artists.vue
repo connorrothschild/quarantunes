@@ -37,10 +37,10 @@
       <ContentBox
         v-if="topArtists"
         :title="'An Artist You Might Like'"
-        :imageSrc="mainstreamArtist.images[0].url"
-        :spotifyUrl="mainstreamArtist.external_urls.spotify"
-        :followerCount="mainstreamArtist.followers.total"
-        :artistName="mainstreamArtist.name"
+        :imageSrc="topRecommendation.images[0].url"
+        :spotifyUrl="topRecommendation.external_urls.spotify"
+        :followerCount="topRecommendation.followers.total"
+        :artistName="topRecommendation.name"
         :type="'artist'"
       />
     </div>
@@ -51,6 +51,7 @@
 import $ from "jquery";
 import * as d3 from "d3";
 import ContentBox from "./ContentBox.vue";
+import _ from 'lodash';    
 
 export default {
   name: "Artists",
@@ -61,7 +62,7 @@ export default {
   data() {
     return {
       topArtists: null,
-      topArtistTrack: null,
+      topRecommendation: null,
     };
   },
   methods: {
@@ -71,16 +72,57 @@ export default {
         url:
           "https://api.spotify.com/v1/me/top/artists?limit=50&time_range=medium_term",
         type: "GET",
-        async: false,
+        async: true,
         headers: {
-          Authorization: "Bearer " + this.token,
+          Authorization: "Bearer " + self.token,
         },
       }).then(function (response) {
         console.log(response.items.slice(0, 5));
         console.log(response.items.map((d) => d.name));
         self.topArtists = response.items;
+        self.getRecommendations(response.items);
       });
       return self.topArtists;
+    },
+    getRecommendations: function (originalArtists) {
+      var self = this;
+      const emptyArray = [];
+      const ids = originalArtists.map(d => d.id);
+      ids.forEach(id => {
+        $.ajax({
+        url:
+          "https://api.spotify.com/v1/artists/" + id + "/related-artists",
+        type: "GET",
+        async: true,
+        headers: {
+          Authorization: "Bearer " + this.token,
+        },
+      }).then(function (response) {
+        // Grab artists from the response
+        const artists = response.artists;
+        
+        // Push those artists to our originally empty array, flatten it
+        emptyArray.push(artists)
+        const recommendationsArray = emptyArray.flat();
+        
+        const recommendationsArtistNames = recommendationsArray.map(d => d.name)
+        // Find counts of each artist's name
+        const counts = _.map(_.countBy(recommendationsArtistNames), (val, key) => ({ name: key, count: val }))
+
+        // Filter out artists they've been listening to
+        const notInMyArtists = counts.filter(i => !originalArtists.map(d => d.name).includes(i.name));
+
+        // Sort according to frequency, grab the first result
+        const sorted = notInMyArtists.sort((a, b) => d3.descending(a.count, b.count));
+        console.log(sorted);
+        const topRecommendationName = sorted[0].name;
+
+        // Go back to the array of artists object and select the one that matches this name
+        self.topRecommendation = artists.filter(i => topRecommendationName.includes(i.name))[0]
+      })
+
+    })
+    return self.topRecommendation
     },
     // getTopArtistsTracks: function () {
     //   var self = this;

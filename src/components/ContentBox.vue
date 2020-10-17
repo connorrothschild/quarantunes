@@ -1,9 +1,11 @@
 <template>
   <div class="box">
     <div v-if="type == 'artist'">
+      <a v-bind:href="spotifyUrl" target="_blank">
       <figure class="image is-square">
         <img class="album-cover" v-bind:src="imageSrc" />
       </figure>
+      </a>
     </div>
 
     <div v-if="type == 'track'">

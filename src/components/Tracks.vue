@@ -67,13 +67,13 @@ export default {
         url:
           "https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=medium_term",
         type: "GET",
-        async: false,
+        async: true,
         headers: {
           Authorization: "Bearer " + this.token,
         },
       }).then(function (response) {
-        console.log(response.items.slice(0, 5));
-        console.log(response.items.map((d) => d.name));
+        // console.log(response.items.slice(0, 5));
+        // console.log(response.items.map((d) => d.name));
         self.topTracks = response.items;
       });
       return self.topTracks;
@@ -83,7 +83,7 @@ export default {
     favoriteTrack: function () {
       var self = this;
       const favorite = self.topTracks[0];
-      console.log(favorite);
+      // console.log(favorite);
       return favorite;
     },
     undergroundTrack: function () {
@@ -92,7 +92,7 @@ export default {
       const popularitySorted = topTracksTemp.sort((a, b) =>
         d3.ascending(a.popularity, b.popularity)
       );
-      console.log(popularitySorted[0]);
+      // console.log(popularitySorted[0]);
       return popularitySorted[0];
     },
     mainstreamTrack: function () {
@@ -101,7 +101,7 @@ export default {
       const popularitySorted = topTracksTemp.sort((a, b) =>
         d3.descending(a.popularity, b.popularity)
       );
-      console.log(popularitySorted[0]);
+      // console.log(popularitySorted[0]);
       return popularitySorted[0];
     },
   },

@@ -43,9 +43,9 @@ export default {
           Authorization: "Bearer " + this.token,
         },
       }).then(function (response) {
-        console.log(response);
-        console.log(response.items.slice(0, 5));
-        console.log(response.items.map((d) => d.track.name));
+        // console.log(response);
+        // console.log(response.items.slice(0, 5));
+        // console.log(response.items.map((d) => d.track.name));
         self.recentlyPlayed = response.items;
       });
       return self.recentlyPlayed;
@@ -56,7 +56,7 @@ export default {
     mostRecentTrack: function () {
       var self = this;
       const recentlyPlayed = self.recentlyPlayed[0];
-      console.log(recentlyPlayed);
+      // console.log(recentlyPlayed);
       return recentlyPlayed;
     },
   },

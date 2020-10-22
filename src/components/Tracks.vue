@@ -39,34 +39,6 @@
       <div class="column">
         <RecentlyPlayed :token="token" />
       </div>
-      <div v-if="trackInfo">
-        <p>Danceability: {{getAverageAudioFeature(this.trackInfo.map(d => d.danceability))}}</p>
-        <progress :value="getAverageAudioFeature(this.trackInfo.map(d => d.danceability))" max="1"></progress>
-
-        <p>Acousticness: {{getAverageAudioFeature(this.trackInfo.map(d => d.acousticness))}}</p>
-        <progress :value="getAverageAudioFeature(this.trackInfo.map(d => d.acousticness))" max="1"></progress>
-
-        <p>Energy: {{getAverageAudioFeature(this.trackInfo.map(d => d.energy))}}</p>
-        <progress :value="getAverageAudioFeature(this.trackInfo.map(d => d.energy))" max="1"></progress>
-
-        <p>Instrumentalness: {{getAverageAudioFeature(this.trackInfo.map(d => d.instrumentalness))}}</p>
-        <progress :value="getAverageAudioFeature(this.trackInfo.map(d => d.instrumentalness))" max="1"></progress>
-
-        <p>Liveness: {{getAverageAudioFeature(this.trackInfo.map(d => d.liveness))}}</p>
-        <progress :value="getAverageAudioFeature(this.trackInfo.map(d => d.liveness))" max="1"></progress>
-
-        <p>Mode: {{getAverageAudioFeature(this.trackInfo.map(d => d.mode))}}</p>
-        <progress :value="getAverageAudioFeature(this.trackInfo.map(d => d.mode))" max="1"></progress>
-
-        <!-- <p>Loudness: {{getAverageAudioFeature(this.trackInfo.map(d => d.loudness))}} / -60db</p> -->
-        <p>Speechiness: {{getAverageAudioFeature(this.trackInfo.map(d => d.speechiness))}}</p>
-        <progress :value="getAverageAudioFeature(this.trackInfo.map(d => d.speechiness))" max="1"></progress>
-
-        <p>Valence: {{getAverageAudioFeature(this.trackInfo.map(d => d.valence))}}</p>
-        <progress :value="getAverageAudioFeature(this.trackInfo.map(d => d.valence))" max="1"></progress>
-
-        <p>{{averageDuration}}</p>
-      </div>
     </div>
 </template>
 
@@ -86,7 +58,6 @@ export default {
   data() {
     return {
       topTracks: null,
-      trackInfo: null,
     };
   },
   methods: {
@@ -122,10 +93,9 @@ export default {
           Authorization: "Bearer " + self.token,
         },
       }).then(function (response) {
-        console.log(response.audio_features)
-        self.trackInfo = response.audio_features
+        // Add this info to global store
+        self.$store.commit("getterTrackInfo", response.audio_features);
       })
-    return self.trackInfo
     },
     getAverageAudioFeature: function (featureArray) {
       const mean = d3.mean(featureArray).toFixed(2);
@@ -133,20 +103,6 @@ export default {
     },
     },
   computed: {
-    averageDuration: function () {
-      var self = this;
-
-      const millisToMinutesAndSeconds = (millis) => {
-          var minutes = Math.floor(millis / 60000);
-          var seconds = ((millis % 60000) / 1000).toFixed(0);
-          return `${minutes} minutes and ${(seconds < 10 ? "0" : "")}${seconds} seconds`;
-      };
-
-      const durations = self.trackInfo.map(d => d.duration_ms);
-      const mean = millisToMinutesAndSeconds(d3.mean(durations));
-      // console.log(mean);
-      return mean;
-    },
     favoriteTrack: function () {
       var self = this;
       const favorite = self.topTracks[0];
@@ -178,20 +134,5 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+<style>
 </style>

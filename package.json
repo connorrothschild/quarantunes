@@ -23,7 +23,8 @@
     "material-components-web": "^7.0.0",
     "sass": "^1.26.11",
     "vue": "^2.6.11",
-    "vue-axios": "^2.1.5"
+    "vue-axios": "^2.1.5",
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
     "@mdi/js": "^5.6.55",

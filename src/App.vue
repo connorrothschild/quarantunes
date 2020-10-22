@@ -27,6 +27,9 @@
       <div class="title is-size-5 mb-0">My Quarantine Tracks</div>
       <hr class="spotify-line" />
       <Tracks :token="token" />
+      <div v-if="this.$store.state.trackInfo">
+        <AudioFeatures :trackInfo="this.$store.state.trackInfo"/>
+      </div>
       <!-- <RecentlyPlayed :token="token" /> -->
     </div>
   </div>
@@ -36,6 +39,7 @@
 import Artists from "./components/Artists.vue";
 import Tracks from "./components/Tracks.vue";
 import UserInfo from "./components/UserInfo.vue";
+import AudioFeatures from "./components/AudioFeatures.vue";
 
 import $ from "jquery";
 import Vue from "vue";
@@ -54,18 +58,16 @@ Vue.use(Buefy);
 export default {
   name: "App",
   components: {
-    // Auth,
     Artists,
     Tracks,
     UserInfo,
+    AudioFeatures
   },
   data() {
     return {
       url: null,
       token: null,
       userInfo: null,
-      topArtists: null,
-      topTracks: null,
     };
   },
   methods: {

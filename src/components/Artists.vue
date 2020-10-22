@@ -106,6 +106,7 @@ export default {
         const recommendationsArray = emptyArray.flat();
         
         const recommendationsArtistNames = recommendationsArray.map(d => d.name)
+
         // Find counts of each artist's name
         const counts = _.map(_.countBy(recommendationsArtistNames), (val, key) => ({ name: key, count: val }))
 
@@ -171,7 +172,6 @@ export default {
   },
   mounted() {
     this.getTopArtists();
-    // this.getTopArtistsTracks();
   },
 };
 </script>

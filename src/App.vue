@@ -33,6 +33,8 @@
 
             <b-tab-item label="Recommendations">
               Recommendations
+              <PolarChart/>
+
             </b-tab-item>
         </b-tabs>
       </div>
@@ -44,6 +46,7 @@ import Artists from "./components/Artists.vue";
 import Tracks from "./components/Tracks.vue";
 import UserInfo from "./components/UserInfo.vue";
 import AudioFeatures from "./components/AudioFeatures.vue";
+import PolarChart from "./components/PolarChart.vue";
 
 import $ from "jquery";
 import Vue from "vue";
@@ -65,7 +68,8 @@ export default {
     Artists,
     Tracks,
     UserInfo,
-    AudioFeatures
+    AudioFeatures,
+    PolarChart
   },
   data() {
     return {

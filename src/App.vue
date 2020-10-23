@@ -12,27 +12,31 @@
       :imageSrc="userInfo.images[0].url"
       :name="userInfo.display_name"
     />
+    
     <div v-if="userInfo" class="main-content">
-      <div class="tabs">
-        <ul>
-          <li class="is-active"><a>Overview</a></li>
-          <li><a>Mood</a></li>
-          <li><a>Recommendations</a></li>
-        </ul>
+        <b-tabs v-model="activeTab">
+            <b-tab-item label="Overview">
+              <div class="title is-size-5 mb-0">My Quarantine Artists</div>
+                <hr class="spotify-line" />
+                <Artists :token="token" />
+              <br />
+              <div class="title is-size-5 mb-0">My Quarantine Tracks</div>
+                <hr class="spotify-line" />
+                <Tracks :token="token" />
+            </b-tab-item>
+
+            <b-tab-item label="Mood">
+              <div v-if="this.$store.state.trackInfo">
+                <AudioFeatures :trackInfo="this.$store.state.trackInfo"/>
+              </div>
+            </b-tab-item>
+
+            <b-tab-item label="Recommendations">
+              Recommendations
+            </b-tab-item>
+        </b-tabs>
       </div>
-      <div class="title is-size-5 mb-0">My Quarantine Artists</div>
-      <hr class="spotify-line" />
-      <Artists :token="token" />
-      <br />
-      <div class="title is-size-5 mb-0">My Quarantine Tracks</div>
-      <hr class="spotify-line" />
-      <Tracks :token="token" />
-      <div v-if="this.$store.state.trackInfo">
-        <AudioFeatures :trackInfo="this.$store.state.trackInfo"/>
-      </div>
-      <!-- <RecentlyPlayed :token="token" /> -->
     </div>
-  </div>
 </template>
 
 <script>
@@ -65,6 +69,7 @@ export default {
   },
   data() {
     return {
+      activeTab: 0,
       url: null,
       token: null,
       userInfo: null,

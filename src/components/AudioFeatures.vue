@@ -3,30 +3,30 @@
       <div class="column">
       <div v-if="trackInfo">
         <p>Danceability: {{getAverageAudioFeature(trackInfo.map(d => d.danceability))}}</p>
-        <progress :value="getAverageAudioFeature(trackInfo.map(d => d.danceability))" max="1"></progress>
+        <b-progress show-value format="percent" :value="getAverageAudioFeature(trackInfo.map(d => d.danceability))" max="1"></b-progress>
 
         <p>Acousticness: {{getAverageAudioFeature(trackInfo.map(d => d.acousticness))}}</p>
-        <progress :value="getAverageAudioFeature(trackInfo.map(d => d.acousticness))" max="1"></progress>
+        <b-progress show-value format="percent" :value="getAverageAudioFeature(trackInfo.map(d => d.acousticness))" max="1"></b-progress>
 
         <p>Energy: {{getAverageAudioFeature(trackInfo.map(d => d.energy))}}</p>
-        <progress :value="getAverageAudioFeature(trackInfo.map(d => d.energy))" max="1"></progress>
+        <b-progress show-value format="percent" :value="getAverageAudioFeature(trackInfo.map(d => d.energy))" max="1"></b-progress>
 
         <p>Instrumentalness: {{getAverageAudioFeature(trackInfo.map(d => d.instrumentalness))}}</p>
-        <progress :value="getAverageAudioFeature(trackInfo.map(d => d.instrumentalness))" max="1"></progress>
+        <b-progress show-value format="percent" :value="getAverageAudioFeature(trackInfo.map(d => d.instrumentalness))" max="1"></b-progress>
 
         <p>Liveness: {{getAverageAudioFeature(trackInfo.map(d => d.liveness))}}</p>
-        <progress :value="getAverageAudioFeature(trackInfo.map(d => d.liveness))" max="1"></progress>
+        <b-progress show-value format="percent" :value="getAverageAudioFeature(trackInfo.map(d => d.liveness))" max="1"></b-progress>
 
         <p>Mode: {{getAverageAudioFeature(trackInfo.map(d => d.mode))}}</p>
-        <progress :value="getAverageAudioFeature(trackInfo.map(d => d.mode))" max="1"></progress>
+        <b-progress show-value format="percent" :value="getAverageAudioFeature(trackInfo.map(d => d.mode))" max="1"></b-progress>
 
         <p>Speechiness: {{getAverageAudioFeature(trackInfo.map(d => d.speechiness))}}</p>
-        <progress :value="getAverageAudioFeature(trackInfo.map(d => d.speechiness))" max="1"></progress>
+        <b-progress show-value format="percent" :value="getAverageAudioFeature(trackInfo.map(d => d.speechiness))" max="1"></b-progress>
 
         <p>Valence: {{getAverageAudioFeature(trackInfo.map(d => d.valence))}}</p>
-        <progress :value="getAverageAudioFeature(trackInfo.map(d => d.valence))" max="1"></progress>
+        <b-progress show-value format="percent" :value="getAverageAudioFeature(trackInfo.map(d => d.valence))" max="1"></b-progress>
 
-        <p>{{averageDuration}}</p>
+        <p>Average song duration: {{averageDuration}}</p>
       </div>
     </div>
     </div>
@@ -63,11 +63,10 @@ export default {
     },
   },
   mounted: function () {
-      console.log('hello')
-      console.log(this.$store.state.trackInfo);  
-},
+      // console.log(this.$store.state.trackInfo);  
+      },
 };
 </script>
 
-<style>
+<style scoped>
 </style>

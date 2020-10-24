@@ -26,11 +26,11 @@
             </b-tab-item>
 
             <b-tab-item label="Mood">
-              <!-- <div > -->
-              <!-- <AudioFeatures :trackInfo="trackInfo"/> -->
-              <!-- <ChartContainer :trackInfo="trackInfo" /> -->
-              <PolarChart :trackInfo="trackInfo"/>
-              <!-- </div> -->
+              <div >
+                <PolarChart v-if="trackInfo.length > 0" :trackInfo="trackInfo" feature="danceability"/>
+                <PolarChart v-if="trackInfo.length > 0" :trackInfo="trackInfo" feature="energy"/>
+                <PolarChart v-if="trackInfo.length > 0" :trackInfo="trackInfo" feature="valence"/>
+              </div>
             </b-tab-item>
 
             <b-tab-item label="Recommendations">
@@ -134,6 +134,7 @@ export default {
     // this.getUrl();
     this.getAccessToken();
     this.getUserInfo();
+    console.log(this.trackInfo.length);
   },
 };
 </script>

@@ -12,6 +12,5 @@ export default new Vuex.Store({
 	},
 	mutations : {
 		setTrackInfo : (state, data) => (state.trackInfo = data)
-	},
-	actions   : {}
+	}
 });

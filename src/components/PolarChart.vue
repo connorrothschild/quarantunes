@@ -1,40 +1,39 @@
 <script>
-
-// TO READ: https://stackoverflow.com/questions/57700550/why-is-this-chartjs-graph-not-being-loaded-using-vue-js
-
 import { Bar } from 'vue-chartjs'
 import * as d3 from "d3";
-// import { mapGetters } from "vuex";
 
 export default {
   extends: Bar,
   name: 'PolarChart',
-  props: ["trackInfo"],
-    // computed: {
-    // ...mapGetters({
-    //   trackInfo: "getTrackInfo",
-    // }),
-    // },
+  props: ["trackInfo", "feature"],
+  methods: {
+    toProperCase: function (string) {
+        return string.charAt(0).toUpperCase() + string.slice(1)
+      }
+  },
   data: () => ({
     chartData: null,
     options: null,
   }),
   mounted () {
     const myData = this.trackInfo;
-    console.log(this.trackInfo);
+    const feature = this.feature;
+    console.log(myData);
 
-    const chartDataArray = myData.sort((a, b) =>
-        d3.ascending(a.danceability, b.danceability)
-      );
+    console.log(this.$props.feature)
+    
+    const chartDataArray = myData.sort((a, b) => d3.ascending(a[feature], b[feature]));
+    console.log(chartDataArray)
 
     const dataLabels = chartDataArray.map(d => d.name + " by " + d.artists[0].name);
+    console.log(dataLabels);
     
     const chartData = { 
       labels: dataLabels,
       datasets: [
         {
-          label: "Danceability",
-          data: chartDataArray.map(d => d.danceability),
+          label: this.toProperCase(feature),
+          data: chartDataArray.map(d => d[feature]),
           backgroundColor: '#1DB954',
           borderColor: "grey",
           borderWidth: 0.15,
@@ -44,35 +43,40 @@ export default {
     this.chartData = chartData;
     console.log(chartData);
 
-const options = {
-      legend: {
-        display: false
-      },
-      title: {
-            display: true,
-            text: 'Danceability',
-            fontSize: 24,
-            fontColor: '#FFFFFF'
+    const options = {
+        legend: {
+          display: false
         },
-      scales: {
-        xAxes: [{
-            ticks: {
-                display: false //this will remove only the label
-            }
-        }]
-      },
-      responsive: true,
-      tooltips: {
-        displayColors: false,
-      },
-      maintainAspectRatio: false
-    };
-    this.options = options;
-    console.log(options)
+        title: {
+              display: true,
+              text: this.toProperCase(feature),
+              fontSize: 24,
+              fontColor: '#FFFFFF'
+          },
+        scales: {
+          xAxes: [{
+              ticks: {
+                  display: false //this will remove only the label
+              }
+          }]
+        },
+        tooltips: {
+          displayColors: false,
+        },
+        responsive: false, // need to make response and maintain aspect ratio = false to make the chart load in tab https://stackoverflow.com/questions/48902410/vue-chart-js-doesnt-get-initialized-in-vue-tab
+        maintainAspectRatio: false
+        
+      };        
+      this.options = options;
+      console.log(options)
 
-    this.renderChart(this.chartData, this.options)
-  },
-  watch: {}
+      this.renderChart(this.chartData, this.options)
+    },
+  watch: {
+    trackInfo: function () {
+      this.renderChart(this.chartData, this.options)
+    }
+  }
 }
 </script>
 

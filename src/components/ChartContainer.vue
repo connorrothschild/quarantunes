@@ -1,25 +1,28 @@
+<template>
+  <div class="container">
+    <PolarChart/>
+  </div>
+</template>
+
 <script>
-
-// TO READ: https://stackoverflow.com/questions/57700550/why-is-this-chartjs-graph-not-being-loaded-using-vue-js
-
-import { Bar } from 'vue-chartjs'
+import PolarChart from "./PolarChart.vue";
 import * as d3 from "d3";
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
-  extends: Bar,
-  name: 'PolarChart',
+  name: 'ChartContainer',
   props: ["trackInfo"],
-    // computed: {
-    // ...mapGetters({
-    //   trackInfo: "getTrackInfo",
-    // }),
-    // },
+  components: { PolarChart },
+    computed: {
+    ...mapGetters({
+      trackInfo: "getTrackInfo",
+    }),
+    },
   data: () => ({
     chartData: null,
     options: null,
   }),
-  mounted () {
+  async mounted () {
     const myData = this.trackInfo;
     console.log(this.trackInfo);
 
@@ -69,12 +72,6 @@ const options = {
     };
     this.options = options;
     console.log(options)
-
-    this.renderChart(this.chartData, this.options)
   },
-  watch: {}
 }
 </script>
-
-<style>
-</style>

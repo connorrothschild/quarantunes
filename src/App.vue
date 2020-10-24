@@ -26,15 +26,14 @@
             </b-tab-item>
 
             <b-tab-item label="Mood">
-              <div v-if="this.$store.state.trackInfo">
-                <AudioFeatures :trackInfo="this.$store.state.trackInfo"/>
-              </div>
+              <!-- <div > -->
+              <!-- <AudioFeatures :trackInfo="trackInfo"/> -->
+              <!-- <ChartContainer :trackInfo="trackInfo" /> -->
+              <PolarChart :trackInfo="trackInfo"/>
+              <!-- </div> -->
             </b-tab-item>
 
             <b-tab-item label="Recommendations">
-              Recommendations
-              <PolarChart/>
-
             </b-tab-item>
         </b-tabs>
       </div>
@@ -45,7 +44,8 @@
 import Artists from "./components/Artists.vue";
 import Tracks from "./components/Tracks.vue";
 import UserInfo from "./components/UserInfo.vue";
-import AudioFeatures from "./components/AudioFeatures.vue";
+// import AudioFeatures from "./components/AudioFeatures.vue";
+// import ChartContainer from "./components/ChartContainer.vue";
 import PolarChart from "./components/PolarChart.vue";
 
 import $ from "jquery";
@@ -54,6 +54,7 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import * as d3 from "d3";
 import Buefy from "buefy";
+import { mapGetters } from "vuex";
 import "./styles/_variables.scss";
 
 Vue.use(VueAxios, axios);
@@ -68,7 +69,8 @@ export default {
     Artists,
     Tracks,
     UserInfo,
-    AudioFeatures,
+    // AudioFeatures,
+    // ChartContainer,
     PolarChart
   },
   data() {
@@ -95,7 +97,7 @@ export default {
       $.ajax({
         url: "https://api.spotify.com/v1/me",
         type: "GET",
-        async: false,
+        async: true,
         headers: {
           Authorization: "Bearer " + self.token,
         },
@@ -113,6 +115,9 @@ export default {
     commaFormat: d3.format(","),
   },
   computed: {
+    ...mapGetters({
+      trackInfo: "getTrackInfo",
+    }),
     getUrl: function () {
       var self = this;
       self.url =

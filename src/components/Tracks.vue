@@ -88,13 +88,16 @@ export default {
         url:
           "https://api.spotify.com/v1/audio-features/?ids=" + idString,
         type: "GET",
-        async: true,
+        async: false,
         headers: {
           Authorization: "Bearer " + self.token,
         },
       }).then(function (response) {
+        const audioFeatures = response.audio_features;
+        // Merge audio features with other stuff, like song info
+        const audioFeaturesMetadata = audioFeatures.map((item, i) => Object.assign({}, item, self.topTracks[i]));
         // Add this info to global store
-        self.$store.commit("getterTrackInfo", response.audio_features);
+        self.$store.commit("setTrackInfo", audioFeaturesMetadata);
       })
     },
     getAverageAudioFeature: function (featureArray) {

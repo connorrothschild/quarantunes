@@ -7,11 +7,11 @@ export default new Vuex.Store({
 	state     : {
 		trackInfo : []
 	},
-	getters   : {},
+	getters   : {
+		getTrackInfo : (state) => state.trackInfo
+	},
 	mutations : {
-		getterTrackInfo(state, payload) {
-			state.trackInfo = payload;
-		}
+		setTrackInfo : (state, data) => (state.trackInfo = data)
 	},
 	actions   : {}
 });

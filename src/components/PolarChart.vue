@@ -64,7 +64,7 @@ export default {
           displayColors: false,
         },
         responsive: false, // need to make response and maintain aspect ratio = false to make the chart load in tab https://stackoverflow.com/questions/48902410/vue-chart-js-doesnt-get-initialized-in-vue-tab
-        maintainAspectRatio: false
+        maintainAspectRatio: true
         
       };        
       this.options = options;

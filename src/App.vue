@@ -27,9 +27,17 @@
 
             <b-tab-item label="Mood">
               <div >
-                <PolarChart v-if="trackInfo.length > 0" :trackInfo="trackInfo" feature="danceability"/>
-                <PolarChart v-if="trackInfo.length > 0" :trackInfo="trackInfo" feature="energy"/>
-                <PolarChart v-if="trackInfo.length > 0" :trackInfo="trackInfo" feature="valence"/>
+                  <div class="columns">
+                    <div class="column">
+                      <PolarChart v-if="trackInfo.length > 0" :trackInfo="trackInfo" feature="danceability"/>
+                      </div>
+                      <div class="column">
+                        <PolarChart v-if="trackInfo.length > 0" :trackInfo="trackInfo" feature="energy"/>
+                      </div>
+                      <div class="column">
+                        <PolarChart v-if="trackInfo.length > 0" :trackInfo="trackInfo" feature="valence"/>
+                      </div>
+                  </div>
               </div>
             </b-tab-item>
 

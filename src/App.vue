@@ -26,16 +26,17 @@
             </b-tab-item>
 
             <b-tab-item label="Mood">
-              <div >
+              <div>
                   <div class="columns">
-                    <div class="column">
-                      <PolarChart v-if="trackInfo.length > 0" :trackInfo="trackInfo" feature="danceability"/>
+                    <div class="column is-one-third">
+                      <!-- Only load charts if tab is active, to prevent display: none https://github.com/apertureless/vue-chartjs/issues/157#issuecomment-318434516 -->
+                      <PolarChart v-if="trackInfo.length > 0 && activeTab == 1" :trackInfo="trackInfo" feature="danceability"/>
                       </div>
-                      <div class="column">
-                        <PolarChart v-if="trackInfo.length > 0" :trackInfo="trackInfo" feature="energy"/>
+                      <div class="column  is-one-third">
+                        <PolarChart v-if="trackInfo.length > 0 && activeTab == 1" :trackInfo="trackInfo" feature="energy"/>
                       </div>
-                      <div class="column">
-                        <PolarChart v-if="trackInfo.length > 0" :trackInfo="trackInfo" feature="valence"/>
+                      <div class="column is-one-third">
+                        <PolarChart v-if="trackInfo.length > 0 && activeTab == 1" :trackInfo="trackInfo" feature="valence"/>
                       </div>
                   </div>
               </div>

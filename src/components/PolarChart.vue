@@ -63,7 +63,7 @@ export default {
         tooltips: {
           displayColors: false,
         },
-        responsive: false, // need to make response and maintain aspect ratio = false to make the chart load in tab https://stackoverflow.com/questions/48902410/vue-chart-js-doesnt-get-initialized-in-vue-tab
+        responsive: true, // need to make response and maintain aspect ratio = false to make the chart load in tab https://stackoverflow.com/questions/48902410/vue-chart-js-doesnt-get-initialized-in-vue-tab
         maintainAspectRatio: true
         
       };        
@@ -76,7 +76,7 @@ export default {
     trackInfo: function () {
       this.renderChart(this.chartData, this.options)
     }
-  }
+  },
 }
 </script>
 

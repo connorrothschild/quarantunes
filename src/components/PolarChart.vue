@@ -18,15 +18,14 @@ export default {
   mounted () {
     const myData = this.trackInfo;
     const feature = this.feature;
-    console.log(myData);
-
-    console.log(this.$props.feature)
+    // console.log(myData);
+    // console.log(feature)
     
     const chartDataArray = myData.sort((a, b) => d3.ascending(a[feature], b[feature]));
-    console.log(chartDataArray)
+    // console.log(chartDataArray)
 
     const dataLabels = chartDataArray.map(d => d.name + " by " + d.artists[0].name);
-    console.log(dataLabels);
+    // console.log(dataLabels);
     
     const chartData = { 
       labels: dataLabels,
@@ -48,13 +47,15 @@ export default {
           display: false
         },
         title: {
-              display: true,
+              display: false, // true,
               text: this.toProperCase(feature),
               fontSize: 24,
               fontColor: '#FFFFFF'
           },
         scales: {
           xAxes: [{
+            categoryPercentage: .95,
+            barPercentage: .9,
               ticks: {
                   display: false //this will remove only the label
               }

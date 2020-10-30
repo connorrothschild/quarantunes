@@ -27,16 +27,29 @@
 
             <b-tab-item label="Mood">
               <div>
-                  <div class="columns">
-                    <div class="column is-one-third">
-                      <!-- Only load charts if tab is active, to prevent display: none https://github.com/apertureless/vue-chartjs/issues/157#issuecomment-318434516 -->
-                      <PolarChart v-if="trackInfo.length > 0 && activeTab == 1" :trackInfo="trackInfo" feature="danceability"/>
+              <p class="title is-size-4">Your tracks, sorted by...</p>
+              <!-- Only load charts if tab is active (activeTab == 1),
+              to prevent display: none https://github.com/apertureless/vue-chartjs/issues/157#issuecomment-318434516 -->
+                  <div v-if="trackInfo.length > 0 && activeTab == 1" class="columns">
+                    <div class="column has-text-centered is-one-quarter">
+                        <p class="heading is-size-4">Danceability</p>
+                        <p class="heading is-size-7">Most danceable: {{mostFeature('danceability')}}</p>
+                        <PolarChart :trackInfo="trackInfo" feature="danceability"/>
                       </div>
-                      <div class="column  is-one-third">
-                        <PolarChart v-if="trackInfo.length > 0 && activeTab == 1" :trackInfo="trackInfo" feature="energy"/>
+                      <div class="column has-text-centered is-one-quarter">
+                        <p class="heading is-size-4">Energy</p>
+                        <p class="heading is-size-7">Most energetic: {{mostFeature('energy')}}</p>
+                        <PolarChart :trackInfo="trackInfo" feature="energy"/>
                       </div>
-                      <div class="column is-one-third">
-                        <PolarChart v-if="trackInfo.length > 0 && activeTab == 1" :trackInfo="trackInfo" feature="valence"/>
+                      <div class="column has-text-centered is-one-quarter">
+                        <p class="heading is-size-4">Valence</p>
+                        <p class="heading is-size-7">Most positive: {{mostFeature('valence')}}</p>
+                        <PolarChart :trackInfo="trackInfo" feature="valence"/>
+                      </div>
+                      <div class="column has-text-centered is-one-quarter">
+                        <p class="heading is-size-4">Tempo</p>
+                        <p class="heading is-size-7">Highest tempo: {{mostFeature('tempo')}}</p>
+                        <PolarChart :trackInfo="trackInfo" feature="tempo"/>
                       </div>
                   </div>
               </div>
@@ -122,6 +135,13 @@ export default {
       this.getUserInfo();
     },
     commaFormat: d3.format(","),
+    mostFeature: function(feature) {
+      let array = [... this.trackInfo];
+      let n = array.length;
+      console.log(n)
+      console.log(array.sort((a, b) => d3.ascending(a[feature], b[feature]))[n - 1].name)
+      return array.sort((a, b) => d3.ascending(a[feature], b[feature]))[n - 1].name
+    }
   },
   computed: {
     ...mapGetters({

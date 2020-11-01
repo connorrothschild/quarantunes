@@ -4,7 +4,7 @@ import * as d3 from "d3";
 
 export default {
   extends: Bar,
-  name: 'PolarChart',
+  name: 'BarChart',
   props: ["trackInfo", "feature"],
   methods: {
     toProperCase: function (string) {
@@ -16,17 +16,17 @@ export default {
     options: null,
   }),
   mounted () {
+    // Grab data and feature from props
     const myData = this.trackInfo;
     const feature = this.feature;
-    // console.log(myData);
-    // console.log(feature)
     
+    // Sort data according to feature
     const chartDataArray = myData.sort((a, b) => d3.ascending(a[feature], b[feature]));
-    // console.log(chartDataArray)
 
+    // Grab labels, which are a combination of name + artist
     const dataLabels = chartDataArray.map(d => d.name + " by " + d.artists[0].name);
-    // console.log(dataLabels);
     
+    // Chart.ks parameters
     const chartData = { 
       labels: dataLabels,
       datasets: [
@@ -36,48 +36,37 @@ export default {
           backgroundColor: '#1DB954',
           borderColor: "grey",
           borderWidth: 0.15,
+          // categoryPercentage: .95,
+          // barPercentage: .9,
         },
       ],
     }
     this.chartData = chartData;
-    console.log(chartData);
 
     const options = {
         legend: {
           display: false
         },
         title: {
-              display: false, // true,
-              text: this.toProperCase(feature),
-              fontSize: 24,
-              fontColor: '#FFFFFF'
-          },
+          display: false,
+        },
         scales: {
           xAxes: [{
-            categoryPercentage: .95,
-            barPercentage: .9,
               ticks: {
-                  display: false //this will remove only the label
+                  display: false 
               }
           }]
         },
         tooltips: {
           displayColors: false,
         },
-        responsive: true, // need to make response and maintain aspect ratio = false to make the chart load in tab https://stackoverflow.com/questions/48902410/vue-chart-js-doesnt-get-initialized-in-vue-tab
+        responsive: true, 
         maintainAspectRatio: true
-        
       };        
       this.options = options;
-      console.log(options)
 
       this.renderChart(this.chartData, this.options)
     },
-  watch: {
-    trackInfo: function () {
-      this.renderChart(this.chartData, this.options)
-    }
-  },
 }
 </script>
 

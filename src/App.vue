@@ -1,74 +1,118 @@
 <template>
-  <div id="app">
-    <div v-if="!userInfo" class="full-page-centered">
-      <button class="button is-size-3 is-spotify">
-        <a :href="getUrl">Authorize Spotify</a>
-      </button>
-    </div>
+	<div id="app">
+		<div v-if="!userInfo" class="full-page-centered">
+			<button class="button is-size-3 is-spotify">
+				<a :href="getUrl">Authorize Spotify</a>
+			</button>
+		</div>
 
-    <UserInfo
-      v-if="userInfo"
-      :spotifyUrl="userInfo.external_urls.spotify"
-      :imageSrc="userInfo.images[0].url"
-      :name="userInfo.display_name"
-    />
-    
-    <div v-if="userInfo" class="main-content">
-        <b-tabs v-model="activeTab">
-            <b-tab-item label="Overview">
-              <div class="title is-size-5 mb-0">My Quarantine Artists</div>
-                <hr class="spotify-line" />
-                <Artists :token="token" />
-              <br />
-              <div class="title is-size-5 mb-0">My Quarantine Tracks</div>
-                <hr class="spotify-line" />
-                <Tracks :token="token" />
-            </b-tab-item>
+		<UserInfo
+			v-if="userInfo"
+			:spotifyUrl="userInfo.external_urls.spotify"
+			:imageSrc="userInfo.images[0].url"
+			:name="userInfo.display_name"
+		/>
 
-            <b-tab-item label="Mood">
-              <div>
-              <p class="title is-size-4">Your tracks, sorted by...</p>
-              <!-- Only load charts if tab is active (activeTab == 1),
+		<div v-if="userInfo" class="main-content">
+			<b-tabs v-model="activeTab">
+				<b-tab-item label="Overview">
+					<div class="title is-size-5 mb-0">My Quarantine Artists</div>
+					<hr class="spotify-line" />
+					<Artists :token="token" />
+					<br />
+					<div class="title is-size-5 mb-0">My Quarantine Tracks</div>
+					<hr class="spotify-line" />
+					<Tracks :token="token" :userInfo="userInfo" />
+				</b-tab-item>
+
+				<b-tab-item label="Mood">
+					<div>
+						<p class="title is-size-4">Your top tracks, sorted by...</p>
+						<!-- Only load charts if tab is active (activeTab == 1),
               to prevent display: none https://github.com/apertureless/vue-chartjs/issues/157#issuecomment-318434516 -->
-                  <div v-if="trackInfo.length > 0 && activeTab == 1" class="columns">
-                    <div class="column has-text-centered is-one-quarter">
-                        <p class="heading is-size-4">Danceability</p>
-                        <p class="heading is-size-7">Most danceable: {{mostFeature('danceability')}}</p>
-                        <PolarChart :trackInfo="trackInfo" feature="danceability"/>
-                      </div>
-                      <div class="column has-text-centered is-one-quarter">
-                        <p class="heading is-size-4">Energy</p>
-                        <p class="heading is-size-7">Most energetic: {{mostFeature('energy')}}</p>
-                        <PolarChart :trackInfo="trackInfo" feature="energy"/>
-                      </div>
-                      <div class="column has-text-centered is-one-quarter">
-                        <p class="heading is-size-4">Valence</p>
-                        <p class="heading is-size-7">Most positive: {{mostFeature('valence')}}</p>
-                        <PolarChart :trackInfo="trackInfo" feature="valence"/>
-                      </div>
-                      <div class="column has-text-centered is-one-quarter">
-                        <p class="heading is-size-4">Tempo</p>
-                        <p class="heading is-size-7">Highest tempo: {{mostFeature('tempo')}}</p>
-                        <PolarChart :trackInfo="trackInfo" feature="tempo"/>
-                      </div>
-                  </div>
-              </div>
-            </b-tab-item>
+						<div v-if="trackInfo.length > 0 && activeTab == 1" class="columns">
+							<div class="column is-one-quarter">
+								<ChartContainer
+									trackInfo="trackInfo"
+									chartTitle="Danceability"
+									subtitle="Most danceable:"
+									feature="danceability"
+									tooltip="Danceability describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity. "
+								/>
+							</div>
+							<div class="column is-one-quarter">
+								<ChartContainer
+									trackInfo="trackInfo"
+									chartTitle="Energy"
+									subtitle="Most energetic:"
+									feature="energy"
+									tooltip="Energy represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy. "
+								/>
+							</div>
+							<div class="column is-one-quarter">
+								<ChartContainer
+									trackInfo="trackInfo"
+									chartTitle="Tempo"
+									subtitle="Highest tempo:"
+									feature="tempo"
+									tooltip="The overall estimated tempo of a track in beats per minute (BPM)."
+								/>
+							</div>
+							<div class="column is-one-quarter">
+								<ChartContainer
+									trackInfo="trackInfo"
+									chartTitle="Valence"
+									subtitle="Most positive:"
+									feature="valence"
+									tooltip="Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry)."
+								/>
+							</div>
+						</div>
+					</div>
+				</b-tab-item>
 
-            <b-tab-item label="Recommendations">
-            </b-tab-item>
-        </b-tabs>
-      </div>
-    </div>
+				<b-tab-item label="Recommendations">
+					<div class="columns">
+						<div class="column">
+							<p class="heading subtitle is-size-5">Your top tracks:</p>
+							<div class="resp-container">
+								<iframe
+									class="resp-iframe"
+									:src="topTracksPlaylistId"
+									v-if="topTracks.length > 0 && activeTab == 2"
+									frameborder="0"
+									allowtransparency="true"
+									allow="encrypted-media"
+								>
+								</iframe>
+							</div>
+						</div>
+						<div class="column">
+							<p class="heading subtitle is-size-5">Some recommendations:</p>
+							<div class="resp-container">
+								<iframe
+									class="resp-iframe"
+									:src="recommendedPlaylistId"
+									v-if="recommendedTracks.length > 0 && activeTab == 2"
+									frameborder="0"
+									allowtransparency="true"
+									allow="encrypted-media"
+								>
+								</iframe>
+							</div>
+						</div>
+					</div>
+				</b-tab-item>
+			</b-tabs>
+		</div>
+	</div>
 </template>
 
 <script>
 import Artists from "./components/Artists.vue";
 import Tracks from "./components/Tracks.vue";
 import UserInfo from "./components/UserInfo.vue";
-// import AudioFeatures from "./components/AudioFeatures.vue";
-// import ChartContainer from "./components/ChartContainer.vue";
-import PolarChart from "./components/PolarChart.vue";
+import ChartContainer from "./components/ChartContainer.vue";
 
 import $ from "jquery";
 import Vue from "vue";
@@ -86,95 +130,83 @@ Vue.use(VueAxios, axios);
 Vue.use(Buefy);
 
 export default {
-  name: "App",
-  components: {
-    Artists,
-    Tracks,
-    UserInfo,
-    // AudioFeatures,
-    // ChartContainer,
-    PolarChart
-  },
-  data() {
-    return {
-      activeTab: 0,
-      url: null,
-      token: null,
-      userInfo: null,
-    };
-  },
-  methods: {
-    getAccessToken: function () {
-      var self = this;
-      // Get authorization token
-      var hashString = location.hash;
-      var myRe = /^#access_token=.+?(?=&)/g;
-      var result = myRe.exec(hashString.toString())[0];
-      self.token = result.slice(14);
-      // console.log(self.token);
-      return self.token;
-    },
-    getUserInfo: function () {
-      var self = this;
-      $.ajax({
-        url: "https://api.spotify.com/v1/me",
-        type: "GET",
-        async: true,
-        headers: {
-          Authorization: "Bearer " + self.token,
-        },
-      }).then(function (response) {
-        console.log(response);
-        self.userInfo = response;
-        // console.log(self.userId);
-      });
-      return self.userInfo;
-    },
-    onAuth: function () {
-      this.getAccessToken();
-      this.getUserInfo();
-    },
-    commaFormat: d3.format(","),
-    mostFeature: function(feature) {
-      let array = [... this.trackInfo];
-      let n = array.length;
-      console.log(n)
-      console.log(array.sort((a, b) => d3.ascending(a[feature], b[feature]))[n - 1].name)
-      return array.sort((a, b) => d3.ascending(a[feature], b[feature]))[n - 1].name
-    }
-  },
-  computed: {
-    ...mapGetters({
-      trackInfo: "getTrackInfo",
-    }),
-    getUrl: function () {
-      var self = this;
-      self.url =
-        "https://accounts.spotify.com/authorize?client_id=" +
-        process.env.VUE_APP_CLIENT_ID +
-        "&redirect_uri=" +
-        process.env.VUE_APP_REDIRECT_URI +
-        "&scope=user-read-private%20user-read-email&response_type=token&state=123";
-      console.log(self.url);
-      return self.url;
-    },
-  },
-  created: function () {
-    // this.getUrl();
-    this.getAccessToken();
-    this.getUserInfo();
-    console.log(this.trackInfo.length);
-  },
+	name: "App",
+	components: {
+		Artists,
+		Tracks,
+		UserInfo,
+		ChartContainer,
+	},
+	data() {
+		return {
+			activeTab: 0,
+			url: null,
+			token: null,
+			userInfo: null,
+		};
+	},
+	methods: {
+		getAccessToken: function () {
+			var self = this;
+			// Get authorization token
+			var hashString = location.hash;
+			var myRe = /^#access_token=.+?(?=&)/g;
+			var result = myRe.exec(hashString.toString())[0];
+			self.token = result.slice(14);
+			return self.token;
+		},
+		getUserInfo: function () {
+			var self = this;
+			$.ajax({
+				url: "https://api.spotify.com/v1/me",
+				type: "GET",
+				async: true,
+				headers: {
+					Authorization: "Bearer " + self.token,
+				},
+			}).then(function (response) {
+				console.log(response);
+				self.userInfo = response;
+				// console.log(self.userId);
+			});
+			return self.userInfo;
+		},
+		commaFormat: d3.format(","),
+	},
+	computed: {
+		...mapGetters({
+			trackInfo: "getTrackInfo",
+      recommendedTracks: "getRecommendedTracks",
+      topTracks: "getTopTracks",
+      recommendedPlaylistId: "getRecommendedPlaylistId",
+      topTracksPlaylistId: "getTopTracksPlaylistId",
+		}),
+		getUrl: function () {
+			var self = this;
+			self.url =
+				"https://accounts.spotify.com/authorize?client_id=" +
+				process.env.VUE_APP_CLIENT_ID +
+				"&redirect_uri=" +
+				process.env.VUE_APP_REDIRECT_URI +
+				"&scope=user-read-private%20user-read-email%20playlist-modify-public&response_type=token&state=123";
+			// console.log(self.url);
+			return self.url;
+		},
+	},
+	created: function () {
+		this.getAccessToken();
+		this.getUserInfo();
+	},
 };
 </script>
 
 <style lang="scss">
 @import "styles/variables";
 #app {
-  font-family: Proxima Nova, Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin-top: 10px;
+	font-family: Proxima Nova, Avenir, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	margin-top: 10px;
 }
 // a {
 //   color: $spotify;
@@ -184,49 +216,70 @@ export default {
 // }
 
 .box {
-  background: transparent;
+	background: transparent;
 }
 html {
-  padding: 2.5%;
-  // if css unsupported:
-  background: rgb(24, 24, 24);
-  // spotify gradient
-  // background: linear-gradient(
-  //   0deg,
-  //   rgba(24, 24, 24, 1) 0%,
-  //   rgba(24, 24, 24, 1) 75%,
-  //   rgba(64, 64, 64, 1) 100%
-  // );
-  // // fix weird repeating bug
-  // background-repeat: no-repeat;
-  // background-attachment: fixed;
+	padding: 2.5%;
+	// if css unsupported:
+	background: rgb(24, 24, 24);
+	// spotify gradient
+	// background: linear-gradient(
+	//   0deg,
+	//   rgba(24, 24, 24, 1) 0%,
+	//   rgba(24, 24, 24, 1) 75%,
+	//   rgba(64, 64, 64, 1) 100%
+	// );
+	// // fix weird repeating bug
+	// background-repeat: no-repeat;
+	// background-attachment: fixed;
 }
 
 body,
 .title,
 .subtitle,
 p {
-  color: white;
+	color: white;
 }
 .vertical-center-content {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .spotify-line {
-  background-color: grey;
-  margin: 0.5rem 0 1rem 0;
-  height: 0.5px;
+	background-color: grey;
+	margin: 0.5rem 0 1rem 0;
+	height: 0.5px;
 }
 
 .tabs {
-  text-transform: uppercase;
+	text-transform: uppercase;
 }
 
 .full-page-centered {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 80vh;
+}
+
+// responsive iframe https://blog.theodo.com/2018/01/responsive-iframes-css-trick/
+.resp-container {
+	position: relative;
+	overflow: hidden;
+	padding-top: 56.25%;
+	height: 600px; // set iframe height here
+}
+
+.resp-iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+// flex media
+.space-between {
+	justify-content: space-between;
 }
 </style>

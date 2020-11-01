@@ -1,77 +1,72 @@
 <template>
-  <div class="container">
-    <PolarChart/>
+  <div>
+    <!-- Chart title and tooltip-->
+    <div class="media space-between">
+      <div class="media-left">
+        <p class="heading is-size-4 is-size-6-tablet">{{ chartTitle }}</p>
+      </div>
+      <div class="media-right ml-0">
+        <b-tooltip
+          :label="tooltip"
+          multilined
+          size="is-medium"
+          position="is-left"
+        >
+          <button class="button is-dark is-size-7">?</button>
+        </b-tooltip>
+      </div>
+    </div>
+    <!-- Chart itself, subtitle -->
+    <div>
+      <BarChart :trackInfo="trackInfo" :feature="feature" />
+      <p class="heading is-size-7 has-text-right">
+        {{ subtitle }}
+        <a target="_blank" :href="mostFeature(feature).external_urls.spotify">{{
+          mostFeature(feature).name
+        }}</a>
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
-import PolarChart from "./PolarChart.vue";
 import * as d3 from "d3";
 import { mapGetters } from "vuex";
 
+import BarChart from "@/components/BarChart.vue";
+
 export default {
-  name: 'ChartContainer',
-  props: ["trackInfo"],
-  components: { PolarChart },
-    computed: {
+  name: "ChartContainer",
+  components: {
+    BarChart,
+  },
+  props: ["feature", "chartTitle", "subtitle", "tooltip"],
+  computed: {
     ...mapGetters({
       trackInfo: "getTrackInfo",
     }),
-    },
-  data: () => ({
-    chartData: null,
-    options: null,
-  }),
-  async mounted () {
-    const myData = this.trackInfo;
-    console.log(this.trackInfo);
-
-    const chartDataArray = myData.sort((a, b) =>
-        d3.ascending(a.danceability, b.danceability)
-      );
-
-    const dataLabels = chartDataArray.map(d => d.name + " by " + d.artists[0].name);
-    
-    const chartData = { 
-      labels: dataLabels,
-      datasets: [
-        {
-          label: "Danceability",
-          data: chartDataArray.map(d => d.danceability),
-          backgroundColor: '#1DB954',
-          borderColor: "grey",
-          borderWidth: 0.15,
-        },
-      ],
-    }
-    this.chartData = chartData;
-    console.log(chartData);
-
-const options = {
-      legend: {
-        display: false
-      },
-      title: {
-            display: true,
-            text: 'Danceability',
-            fontSize: 24,
-            fontColor: '#FFFFFF'
-        },
-      scales: {
-        xAxes: [{
-            ticks: {
-                display: false //this will remove only the label
-            }
-        }]
-      },
-      responsive: true,
-      tooltips: {
-        displayColors: false,
-      },
-      maintainAspectRatio: false
-    };
-    this.options = options;
-    console.log(options)
   },
-}
+  methods: {
+    mostFeature: function (feature) {
+      // Copy array
+      let array = [...this.trackInfo];
+      // Grab length
+      let n = array.length;
+      
+      // Return the object at the *end* of that array
+      return array.sort((a, b) => d3.ascending(a[feature], b[feature]))[n - 1];
+    },
+  },
+};
 </script>
+
+<style scoped lang="scss">
+@import "@/styles/variables";
+a {
+  color: $spotify;
+
+  &:hover {
+    color: $spotify-invert;
+  }
+}
+</style>

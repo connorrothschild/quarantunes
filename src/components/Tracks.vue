@@ -34,15 +34,16 @@
 			/>
 		</div>
 		<div class="column">
-  <ContentBox
-    :title="'Most Recently Played'"
-    :imageSrc="mostRecentTrack.track.album.images[0].url"
-    :previewUrl="mostRecentTrack.track.preview_url"
-    :spotifyUrl="mostRecentTrack.track.external_urls.spotify"
-    :trackName="mostRecentTrack.track.name"
-    :artistName="mostRecentTrack.track.artists[0].name"
-    :type="'track'"
-  />		</div>
+			<ContentBox
+				:title="'Most Recently Played'"
+				:imageSrc="mostRecentTrack.track.album.images[0].url"
+				:previewUrl="mostRecentTrack.track.preview_url"
+				:spotifyUrl="mostRecentTrack.track.external_urls.spotify"
+				:trackName="mostRecentTrack.track.name"
+				:artistName="mostRecentTrack.track.artists[0].name"
+				:type="'track'"
+			/>
+		</div>
 	</div>
 </template>
 
@@ -59,11 +60,12 @@ export default {
 	},
 	data() {
 		return {
-      topTracks: null,
-      recentlyPlayed: null,
+			topTracks: null,
+			recentlyPlayed: null,
 			recommendedPlaylistId: null,
-      recommendedTracks: null,
-      topTracksPlaylistId: null,
+			recommendedTracks: null,
+			topTracksPlaylistId: null,
+			playlistCreated: false,
 		};
 	},
 	methods: {
@@ -84,8 +86,8 @@ export default {
 					console.log("Error getting top tracks");
 				},
 			}).then(function (response) {
-        const topTracks = response.items;
-        self.topTracks = response.items;
+				const topTracks = response.items;
+				self.topTracks = response.items;
 
 				// All tracks in concatenated string
 				const idString = response.items.map((d) => d.id).join(",");
@@ -95,10 +97,10 @@ export default {
 					.join(",");
 				// console.log(idStringTop5)
 				self.getTrackInfo(idString);
-        self.getRecommendedTracks(idStringTop5);
-        
-        self.$store.commit("setTopTracks", topTracks);
-        self.populatePlaylistTopTracks(topTracks);
+				self.getRecommendedTracks(idStringTop5);
+
+				self.$store.commit("setTopTracks", topTracks);
+				self.populatePlaylistTopTracks(topTracks);
 			});
 			return self.topTracks;
 		},
@@ -124,7 +126,7 @@ export default {
 				// Merge audio features with other stuff, like song info
 				const audioFeaturesMetadata = audioFeatures.map((item, i) =>
 					Object.assign({}, item, self.topTracks[i])
-        );
+				);
 
 				// Add this info to global store
 				self.$store.commit("setTrackInfo", audioFeaturesMetadata);
@@ -152,26 +154,26 @@ export default {
 			}).then(function (response) {
 				const recommendedTracks = response.tracks;
 				self.recommendedTracks = response.tracks;
-        self.populatePlaylistRecommendedTracks(response.tracks);
+				self.populatePlaylistRecommendedTracks(response.tracks);
 				// Add tracks global store
 				self.$store.commit("setRecommendedTracks", recommendedTracks);
 			});
-    },
-    getRecentlyPlayed: function () {
-      var self = this;
-      $.ajax({
-        url: "https://api.spotify.com/v1/me/player/recently-played",
-        type: "GET",
-        async: false,
-        headers: {
-          Authorization: "Bearer " + self.token,
-        },
-      }).then(function (response) {
-        console.log(response);
-        self.recentlyPlayed = response.items;
-      });
-      return self.recentlyPlayed;
-    },
+		},
+		getRecentlyPlayed: function () {
+			var self = this;
+			$.ajax({
+				url: "https://api.spotify.com/v1/me/player/recently-played",
+				type: "GET",
+				async: false,
+				headers: {
+					Authorization: "Bearer " + self.token,
+				},
+			}).then(function (response) {
+				console.log(response);
+				self.recentlyPlayed = response.items;
+			});
+			return self.recentlyPlayed;
+		},
 		newRecommendationsPlaylist: function () {
 			var self = this;
 			let jsonData = JSON.stringify({
@@ -191,7 +193,10 @@ export default {
 					Authorization: "Bearer " + self.token,
 				},
 				success: function (result) {
-					console.log("Successfully created recommended tracks playlist:", result);
+					console.log(
+						"Successfully created recommended tracks playlist:",
+						result
+					);
 					self.$store.commit(
 						"setRecommendedPlaylistId",
 						"https://open.spotify.com/embed/playlist/" + result.id
@@ -203,7 +208,7 @@ export default {
 				},
 			});
 		},
-    newTopTracksPlaylist: function () {
+		newTopTracksPlaylist: function () {
 			var self = this;
 			let jsonData = JSON.stringify({
 				name: "My Quarantunes",
@@ -233,11 +238,11 @@ export default {
 					console.log("Error creating top tracks playlist");
 				},
 			});
-    }, 
-    populatePlaylistTopTracks: function (topTracks) {
-      var self = this;
-      var uris = topTracks.map((d) => d.uri).join(",");
-      console.log(uris);
+		},
+		populatePlaylistTopTracks: function (topTracks) {
+			var self = this;
+			var uris = topTracks.map((d) => d.uri).join(",");
+			console.log(uris);
 			$.ajax({
 				url:
 					"https://api.spotify.com/v1/playlists/" +
@@ -256,7 +261,7 @@ export default {
 					console.log("Error populating top tracks playlist");
 				},
 			});
-    },   
+		},
 		populatePlaylistRecommendedTracks: function (recommendedTracks) {
 			var self = this;
 			let uris = recommendedTracks.map((d) => d.uri).join(",");
@@ -272,21 +277,24 @@ export default {
 					Authorization: "Bearer " + self.token,
 				},
 				success: function (result) {
-					console.log("Successfully populated recommended tracks playlist:", result);
+					console.log(
+						"Successfully populated recommended tracks playlist:",
+						result
+					);
 				},
 				error: function () {
 					console.log("Error populating recommended tracks playlist");
 				},
 			});
-    },   
+		},
 	},
 	computed: {
-    mostRecentTrack: function () {
-      var self = this;
-      const recentlyPlayed = self.recentlyPlayed[0];
-      // console.log(recentlyPlayed);
-      return recentlyPlayed;
-    },
+		mostRecentTrack: function () {
+			var self = this;
+			const recentlyPlayed = self.recentlyPlayed[0];
+			// console.log(recentlyPlayed);
+			return recentlyPlayed;
+		},
 		favoriteTrack: function () {
 			var self = this;
 			const favorite = self.topTracks[0];
@@ -311,14 +319,19 @@ export default {
 			// console.log(popularitySorted[0]);
 			return popularitySorted[0];
 		},
-  },
-  created: function() {
-    // // UNCOMMENT WHEN READY!
-    // this.newRecommendationsPlaylist();
-    // this.newTopTracksPlaylist();
-    },
+	},
+	created: function () {
+		// // Need to cache this for user so that we don't recreate a new playlist every time a user refreshes
+		// // Ask Jonathan about this
+		////// Uncomment when ready:
+		// if (this.playlistCreated == false) {
+		// 	this.newRecommendationsPlaylist();
+		// 	this.newTopTracksPlaylist();
+		// }
+		// this.playlistCreated = true;
+	},
 	mounted: function () {
-    this.getRecentlyPlayed();
+		this.getRecentlyPlayed();
 		this.getTopTracks();
 	},
 };

@@ -14,7 +14,7 @@
 		/>
 
 		<div v-if="userInfo" class="main-content">
-			<b-tabs v-model="activeTab">
+			<b-tabs class="spotify-tabs" v-model="activeTab">
 				<b-tab-item label="Overview">
 					<div class="title is-size-5 mb-0">My Quarantine Artists</div>
 					<hr class="spotify-line" />
@@ -176,10 +176,10 @@ export default {
 	computed: {
 		...mapGetters({
 			trackInfo: "getTrackInfo",
-      recommendedTracks: "getRecommendedTracks",
-      topTracks: "getTopTracks",
-      recommendedPlaylistId: "getRecommendedPlaylistId",
-      topTracksPlaylistId: "getTopTracksPlaylistId",
+			recommendedTracks: "getRecommendedTracks",
+			topTracks: "getTopTracks",
+			recommendedPlaylistId: "getRecommendedPlaylistId",
+			topTracksPlaylistId: "getTopTracksPlaylistId",
 		}),
 		getUrl: function () {
 			var self = this;
@@ -281,5 +281,31 @@ p {
 // flex media
 .space-between {
 	justify-content: space-between;
+}
+
+// tabs
+.spotify-tabs {
+	a:hover {
+		border-bottom: none;
+	}
+	span {
+		display: inline-block;
+		padding-bottom: 5px;
+		position: relative;
+	}
+	.is-active {
+		span {
+			font-weight: 600;
+		}
+		span:before {
+			content: "";
+			position: absolute;
+			width: 50%;
+			height: 1px;
+			bottom: 0;
+			left: 25%;
+			border-bottom: 1px solid $spotify;
+		}
+	}
 }
 </style>

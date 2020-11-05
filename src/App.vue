@@ -208,12 +208,11 @@ export default {
 	-moz-osx-font-smoothing: grayscale;
 	margin-top: 10px;
 }
-// a {
-//   color: $spotify;
-//   &:hover {
-//     color: darkgreen;
-//   }
-// }
+a {
+	&:hover {
+		color: $spotify;
+	}
+}
 
 .box {
 	background: transparent;
@@ -223,15 +222,15 @@ html {
 	// if css unsupported:
 	background: rgb(24, 24, 24);
 	// spotify gradient
-	// background: linear-gradient(
-	//   0deg,
-	//   rgba(24, 24, 24, 1) 0%,
-	//   rgba(24, 24, 24, 1) 75%,
-	//   rgba(64, 64, 64, 1) 100%
-	// );
-	// // fix weird repeating bug
-	// background-repeat: no-repeat;
-	// background-attachment: fixed;
+	background: linear-gradient(
+		0deg,
+		rgba(24, 24, 24, 1) 0%,
+		rgba(24, 24, 24, 1) 75%,
+		rgba(64, 64, 64, 1) 100%
+	);
+	// fix weird repeating bug
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 }
 
 body,
@@ -249,10 +248,6 @@ p {
 	background-color: grey;
 	margin: 0.5rem 0 1rem 0;
 	height: 0.5px;
-}
-
-.tabs {
-	text-transform: uppercase;
 }
 
 .full-page-centered {
@@ -288,23 +283,26 @@ p {
 	a:hover {
 		border-bottom: none;
 	}
-	span {
-		display: inline-block;
-		padding-bottom: 5px;
-		position: relative;
-	}
-	.is-active {
+	.tabs {
 		span {
-			font-weight: 600;
+			text-transform: uppercase;
+			display: inline-block;
+			padding-bottom: 5px;
+			position: relative;
 		}
-		span:before {
-			content: "";
-			position: absolute;
-			width: 50%;
-			height: 1px;
-			bottom: 0;
-			left: 25%;
-			border-bottom: 1px solid $spotify;
+		.is-active {
+			span {
+				font-weight: 500;
+			}
+			span:before {
+				content: "";
+				position: absolute;
+				width: 50%;
+				height: 1px;
+				bottom: 0;
+				left: 25%;
+				border-bottom: 1px solid $spotify;
+			}
 		}
 	}
 }

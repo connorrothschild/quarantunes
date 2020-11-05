@@ -1,5 +1,8 @@
 <template>
 	<div class="box">
+		<audio ref="player">
+			<source v-bind:src="currentSong" />
+		</audio>
 		<!-- For artist types, return an image of the artist -->
 		<div v-if="type == 'artist'">
 			<a v-bind:href="spotifyUrl" target="_blank">
@@ -10,9 +13,17 @@
 		</div>
 
 		<!-- For tracks, return album cover -->
-		<div v-if="type == 'track'">
+		<div v-if="type == 'track'" v-on:click="togglePlayed">
 			<!-- This also has album-cover-container for CSS hover properties below -->
-			<figure class="image is-square album-cover-container">
+			<!-- On click, set song to preview URL and the `watch` in mounted() will play/pause -->
+			<figure
+				v-on:click="setSong(previewUrl)"
+				class="image is-square"
+				v-bind:class="{
+					'album-cover-container-clicked': played,
+					'album-cover-container': notPlayed,
+				}"
+			>
 				<img class="album-cover" v-bind:src="imageSrc" />
 			</figure>
 		</div>
@@ -49,6 +60,7 @@
 
 <script>
 import * as d3 from "d3";
+import "../styles/_variables.scss";
 
 export default {
 	name: "ContentBox",
@@ -64,35 +76,58 @@ export default {
 	],
 	data() {
 		return {
+			isPlaying: true,
+			currentSong: null,
 			hovered: false,
-			isPlaying: false,
-			// sound: null,
+			played: false,
+			notPlayed: true,
 		};
 	},
 	computed: {},
 	methods: {
-		playSound(sound) {
-			var audio = new Audio(sound);
-			if (this.isPlaying == sound) {
+		setSong(previewUrl) {
+			const self = this;
+			self.currentSong = previewUrl;
+			self.isPlaying == true
+				? (self.isPlaying = false)
+				: (self.isPlaying = true);
+		},
+		togglePlayed() {
+			const self = this;
+			self.played == true ? (self.played = false) : (self.played = true);
+		},
+		commaFormat: d3.format(","),
+	},
+	mounted: function () {
+		this.$watch("isPlaying", function () {
+			var audio = this.$refs.player;
+			audio.load();
+
+			if (this.isPlaying == true) {
 				audio.pause();
-				this.isPlaying = false;
+				// this.isPlaying = false;
 				console.log("Should be paused: ", audio.paused);
 				console.log(this.isPlaying);
 			} else {
 				audio.play();
-				this.isPlaying = sound;
+				// this.isPlaying = true;
 				console.log("Should be paused: ", audio.paused);
 				console.log(this.isPlaying);
 			}
-		},
-		commaFormat: d3.format(","),
+		});
+		console.log(this.$refs);
 	},
 };
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/variables";
 .album-cover {
 	object-fit: cover;
+	// &:hover {
+	// 	filter: brightness(0.6);
+	// 	cursor: pointer;
+	// }
 }
 
 .album-cover-container:hover {
@@ -100,7 +135,35 @@ export default {
 		content: "\f04b";
 		font-family: FontAwesome;
 		color: white;
-		border: 1px solid white;
+		border: 2px solid white;
+		border-radius: 50%;
+		font-size: 35px;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		background: rgba(0, 0, 0, 0.5);
+		width: 80px;
+		height: 80px;
+		line-height: 80px;
+		border-radius: 50%;
+		text-align: center;
+		transform: translate(-50%, -50%);
+		z-index: 99;
+		cursor: pointer;
+	}
+
+	.album-cover {
+		filter: brightness(0.6);
+		cursor: pointer;
+	}
+}
+
+.album-cover-container-clicked:hover {
+	&::before {
+		content: "\f04c";
+		font-family: FontAwesome;
+		color: white;
+		border: 2px solid white;
 		border-radius: 50%;
 		font-size: 35px;
 		position: absolute;
@@ -129,11 +192,16 @@ export default {
 
 .box {
 	padding: 0;
+	background-color: transparent;
 }
 
 @media screen and (max-width: 768px) {
 	.is-size-8-mobile {
 		font-size: 0.6rem !important;
 	}
+}
+
+a:hover {
+	color: $spotify;
 }
 </style>

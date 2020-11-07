@@ -188,7 +188,7 @@ export default {
 				process.env.VUE_APP_CLIENT_ID +
 				"&redirect_uri=" +
 				process.env.VUE_APP_REDIRECT_URI +
-				"&scope=user-read-private%20user-read-email%20playlist-modify-public&response_type=token&state=123";
+				"&scope=user-top-read%20playlist-modify-private%20playlist-modify-public%20user-read-recently-played&response_type=token&state=123";
 			// console.log(self.url);
 			return self.url;
 		},

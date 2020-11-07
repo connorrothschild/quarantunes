@@ -82,7 +82,8 @@ export default {
 				success: function (result) {
 					console.log("Successfully getting top tracks:", result);
 				},
-				error: function () {
+				error: function (e) {
+					console.log(e);
 					console.log("Error getting top tracks");
 				},
 			}).then(function (response) {
@@ -168,6 +169,12 @@ export default {
 				headers: {
 					Authorization: "Bearer " + self.token,
 				},
+				success: function (result) {
+					console.log("Successfully got recently played track:", result);
+				},
+				error: function (e) {
+					console.log("Error in getting recently played track:", e);
+				},
 			}).then(function (response) {
 				console.log(response);
 				self.recentlyPlayed = response.items;
@@ -234,7 +241,8 @@ export default {
 					);
 					self.topTracksPlaylistId = result.id;
 				},
-				error: function () {
+				error: function (e) {
+					console.log(e);
 					console.log("Error creating top tracks playlist");
 				},
 			});
@@ -257,7 +265,8 @@ export default {
 				success: function (result) {
 					console.log("Successfully populated top tracks playlist:", result);
 				},
-				error: function () {
+				error: function (e) {
+					console.log(e);
 					console.log("Error populating top tracks playlist");
 				},
 			});

@@ -323,12 +323,12 @@ export default {
 	created: function () {
 		// // Need to cache this for user so that we don't recreate a new playlist every time a user refreshes
 		// // Ask Jonathan about this
-		////// Uncomment when ready:
-		// if (this.playlistCreated == false) {
-		// 	this.newRecommendationsPlaylist();
-		// 	this.newTopTracksPlaylist();
-		// }
-		// this.playlistCreated = true;
+		//// Uncomment when ready:
+		if (this.playlistCreated == false) {
+			this.newRecommendationsPlaylist();
+			this.newTopTracksPlaylist();
+		}
+		this.playlistCreated = true;
 	},
 	mounted: function () {
 		this.getRecentlyPlayed();

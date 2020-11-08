@@ -367,7 +367,7 @@ export default {
 		// Here, search through all user playlists
 		// If they have "My Quarantunes Recommendations", store that ID and move on
 		// If not, create My Quarantunes Recommendations and populate it.
-		createRecommendedTracksPlaylistIfNoExist: function (recommendedTracks) {
+		createRecommendedTracksPlaylistIfNoExist: function () {
 			var self = this;
 			$.ajax({
 				url: "https://api.spotify.com/v1/me/playlists?limit=50",

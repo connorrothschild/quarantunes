@@ -36,7 +36,9 @@
 				</a>
 			</p>
 
-			<p class="heading is-size-7 is-size-8-mobile subtitle greyed">
+			<p
+				class="heading is-size-6-desktop is-size-7-tablet is-size-8-mobile subtitle greyed"
+			>
 				{{ title }} <br />
 				{{ commaFormat(followerCount) }} followers
 			</p>
@@ -50,7 +52,9 @@
 				</a>
 			</p>
 
-			<p class="heading is-size-7 is-size-8-mobile subtitle greyed">
+			<p
+				class="heading is-size-6-desktop is-size-7-tablet is-size-8-mobile subtitle greyed"
+			>
 				{{ title }} <br />
 				By {{ artistName }}
 			</p>
@@ -106,16 +110,16 @@ export default {
 			if (this.isPlaying == true) {
 				audio.pause();
 				// this.isPlaying = false;
-				console.log("Should be paused: ", audio.paused);
-				console.log(this.isPlaying);
+				// console.log("Should be paused: ", audio.paused);
+				// console.log(this.isPlaying);
 			} else {
 				audio.play();
 				// this.isPlaying = true;
-				console.log("Should be paused: ", audio.paused);
-				console.log(this.isPlaying);
+				// console.log("Should be paused: ", audio.paused);
+				// console.log(this.isPlaying);
 			}
 		});
-		console.log(this.$refs);
+		// console.log(this.$refs);
 	},
 };
 </script>

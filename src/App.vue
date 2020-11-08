@@ -37,7 +37,7 @@
 									chartTitle="Danceability"
 									subtitle="Most danceable:"
 									feature="danceability"
-									tooltip="Danceability describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity. "
+									tooltip="Danceability describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity."
 								/>
 							</div>
 							<div class="column is-one-quarter">
@@ -68,11 +68,34 @@
 								/>
 							</div>
 						</div>
+						<!-- <div v-if="trackInfo.length > 0 && activeTab == 1" class="columns">
+							<div class="column is-one-quarter">
+								<ChartContainer
+									trackInfo="trackInfo"
+									chartTitle="Popularity"
+									subtitle="Most popular:"
+									feature="popularity"
+									tooltip="The popularity is calculated by algorithm and is based, in the most part, on the total number of plays the track has had and how recent those plays are."
+								/>
+							</div>
+							<div class="column is-one-quarter">
+								<ChartContainer
+									trackInfo="trackInfo"
+									chartTitle="Duration"
+									subtitle="Longest:"
+									feature="duration_ms"
+									tooltip="The duration of the song in milliseconds."
+								/>
+							</div>
+						</div> -->
 					</div>
 				</b-tab-item>
 
 				<b-tab-item label="Recommendations">
-					<div class="columns">
+					<div
+						class="columns"
+						v-if="topTracks.length > 0 && recommendedTracks.length > 0"
+					>
 						<div class="column">
 							<p class="heading subtitle is-size-5">Your top tracks:</p>
 							<div class="resp-container">
@@ -165,9 +188,7 @@ export default {
 					Authorization: "Bearer " + self.token,
 				},
 			}).then(function (response) {
-				console.log(response);
 				self.userInfo = response;
-				// console.log(self.userId);
 			});
 			return self.userInfo;
 		},
@@ -189,7 +210,6 @@ export default {
 				"&redirect_uri=" +
 				process.env.VUE_APP_REDIRECT_URI +
 				"&scope=user-top-read%20playlist-modify-private%20playlist-modify-public%20user-read-recently-played&response_type=token&state=123";
-			// console.log(self.url);
 			return self.url;
 		},
 	},

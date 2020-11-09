@@ -109,17 +109,10 @@ export default {
 
 			if (this.isPlaying == true) {
 				audio.pause();
-				// this.isPlaying = false;
-				// console.log("Should be paused: ", audio.paused);
-				// console.log(this.isPlaying);
 			} else {
 				audio.play();
-				// this.isPlaying = true;
-				// console.log("Should be paused: ", audio.paused);
-				// console.log(this.isPlaying);
 			}
 		});
-		// console.log(this.$refs);
 	},
 };
 </script>
@@ -128,10 +121,10 @@ export default {
 @import "@/styles/variables";
 .album-cover {
 	object-fit: cover;
-	// &:hover {
-	// 	filter: brightness(0.6);
-	// 	cursor: pointer;
-	// }
+	&:hover {
+		filter: brightness(0.8);
+		cursor: pointer;
+	}
 }
 
 .album-cover-container:hover {

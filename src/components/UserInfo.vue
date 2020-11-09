@@ -5,11 +5,7 @@
 			<div class="level-right">
 				<div class="level-item">
 					<b-dropdown position="is-bottom-left" aria-role="list">
-						<button
-							class="button is-transparent"
-							slot="trigger"
-							slot-scope="{ active }"
-						>
+						<button class="button is-transparent" slot="trigger">
 							<div class="media">
 								<div class="media-left">
 									<figure class="image is-24x24">
@@ -30,18 +26,18 @@
 									<p class="is-size-6 has-text-weight-bold mr-">
 										{{ name }}
 									</p>
-									<span class="icon has-text-white">
+									<!-- <span class="icon has-text-white">
 										<i
 											:class="active ? 'fas fa-angle-up' : 'fas fa-angle-down'"
 										></i>
-									</span>
+									</span> -->
 								</div>
 							</div>
 						</button>
 
-						<b-dropdown-item class="is-dark" aria-role="listitem">
+						<!-- <b-dropdown-item class="is-dark" aria-role="listitem">
 							Share to Instagram
-						</b-dropdown-item>
+						</b-dropdown-item> -->
 						<b-dropdown-item aria-role="listitem"
 							><a
 								target="_blank"
@@ -50,7 +46,9 @@
 							></b-dropdown-item
 						>
 						<b-dropdown-item aria-role="listitem"
-							>Something else</b-dropdown-item
+							><a target="_blank" href="https://connorrothschild.com"
+								>Who Made This?</a
+							></b-dropdown-item
 						>
 					</b-dropdown>
 				</div>

@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/59263ba7-8b9d-4c17-a508-d94040fa3248/deploy-status)](https://app.netlify.com/sites/quarantune/deploys)
+
 # Quarantunes
 ### What you're listening to during quarantine. 
 

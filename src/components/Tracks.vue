@@ -188,8 +188,8 @@ export default {
 			let jsonData = JSON.stringify({
 				name: "My Quarantunes Recommendations",
 				description:
-					"Music for the next pandemic. Created by Connor Rothschild",
-				public: false,
+					"Music for the next pandemic. Created at quarantune.netlify.app",
+				public: true,
 			});
 			$.ajax({
 				url:
@@ -224,8 +224,8 @@ export default {
 			let jsonData = JSON.stringify({
 				name: "My Quarantunes",
 				description:
-					"What I'm listening to this pandemic. Created by Connor Rothschild",
-				public: false,
+					"What I'm listening to this pandemic. Created at quarantune.netlify.app",
+				public: true,
 			});
 			$.ajax({
 				url:

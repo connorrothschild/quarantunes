@@ -58,7 +58,7 @@ export default {
 	data() {
 		return {
 			topArtists: null,
-			topRecommendation: null,
+			topRecommendation: null, // FIXME: lots of undefined and null because of the order the app computes everything
 		};
 	},
 	methods: {
@@ -93,33 +93,27 @@ export default {
 				}).then(function (response) {
 					// Grab artists from the response
 					const artists = response.artists;
-
 					// Push those artists to our originally empty array, flatten it
 					emptyArray.push(artists);
 					const recommendationsArray = emptyArray.flat();
-
 					const recommendationsArtistNames = recommendationsArray.map(
 						(d) => d.name
 					);
-
 					// Find counts of each artist's name
 					const counts = _.map(
 						_.countBy(recommendationsArtistNames),
 						(val, key) => ({ name: key, count: val })
 					);
-
 					// Filter out artists they've been listening to
 					const notInMyArtists = counts.filter(
 						(i) => !originalArtists.map((d) => d.name).includes(i.name)
 					);
-
 					// Sort according to frequency, grab the first result
 					const sorted = notInMyArtists.sort((a, b) =>
 						d3.descending(a.count, b.count)
 					);
 					// console.log(sorted);
 					const topRecommendationName = sorted[0].name;
-
 					// Go back to the array of artists object and select the one that matches this name
 					self.topRecommendation = artists.filter((i) =>
 						topRecommendationName.includes(i.name)
@@ -133,7 +127,6 @@ export default {
 		favoriteArtist: function () {
 			var self = this;
 			const favorite = self.topArtists[0];
-			// console.log(favorite);
 			return favorite;
 		},
 		undergroundArtist: function () {
@@ -142,7 +135,6 @@ export default {
 			const popularitySorted = topArtistsTemp.sort((a, b) =>
 				d3.ascending(a.popularity, b.popularity)
 			);
-			// console.log(popularitySorted[0]);
 			return popularitySorted[0];
 		},
 		mainstreamArtist: function () {
@@ -151,11 +143,10 @@ export default {
 			const popularitySorted = topArtistsTemp.sort((a, b) =>
 				d3.descending(a.popularity, b.popularity)
 			);
-			// console.log(popularitySorted[0]);
 			return popularitySorted[0];
 		},
 	},
-	created() {
+	mounted() {
 		this.getTopArtists();
 	},
 };

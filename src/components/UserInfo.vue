@@ -13,7 +13,16 @@
 							<div class="media">
 								<div class="media-left">
 									<figure class="image is-24x24">
-										<img class="image is-rounded" :src="imageSrc" />
+										<img
+											v-if="imageSrc"
+											class="image is-rounded"
+											:src="imageSrc"
+										/>
+										<img
+											v-else
+											class="image is-rounded"
+											src="https://raw.githubusercontent.com/connorrothschild/quarantunes/master/src/images/placeholder.png"
+										/>
 									</figure>
 								</div>
 
@@ -53,7 +62,12 @@
 					<div class="media-left">
 						<a :href="spotifyUrl" target="_blank">
 							<figure class="image is-96x96">
-								<img class="image is-rounded" :src="imageSrc" />
+								<img v-if="imageSrc" class="image is-rounded" :src="imageSrc" />
+								<img
+									v-else
+									class="image is-rounded"
+									src="https://raw.githubusercontent.com/connorrothschild/quarantunes/master/src/images/placeholder.png"
+								/>
 							</figure>
 						</a>
 					</div>

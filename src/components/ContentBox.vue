@@ -36,12 +36,12 @@
 				</a>
 			</p>
 
-			<p
-				class="heading is-size-6-desktop is-size-7-tablet is-size-8-mobile subtitle greyed"
+			<div
+				class="heading is-size-6-desktop is-size-7-tablet is-size-8-mobile subtitle"
 			>
-				{{ title }} <br />
-				{{ commaFormat(followerCount) }} followers
-			</p>
+				<p class="mb-1 has-text-weight-bold">{{ title }}</p>
+				<p class="greyed">{{ commaFormat(followerCount) }} followers</p>
+			</div>
 		</div>
 
 		<!-- If track, return 1) the track name, 2) what it is ('Most Underground') and the artist -->
@@ -52,12 +52,12 @@
 				</a>
 			</p>
 
-			<p
-				class="heading is-size-6-desktop is-size-7-tablet is-size-8-mobile subtitle greyed"
+			<div
+				class="heading is-size-6-desktop is-size-7-tablet is-size-8-mobile subtitle"
 			>
-				{{ title }} <br />
-				By {{ artistName }}
-			</p>
+				<p class="mb-1 has-text-weight-bold">{{ title }}</p>
+				<p class="greyed">By {{ artistName }}</p>
+			</div>
 		</div>
 	</div>
 </template>
@@ -195,6 +195,12 @@ export default {
 @media screen and (max-width: 768px) {
 	.is-size-8-mobile {
 		font-size: 0.6rem !important;
+	}
+}
+
+@media screen and (max-width: 450px) {
+	.is-size-8-mobile {
+		font-size: 0.5rem !important;
 	}
 }
 

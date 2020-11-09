@@ -1,28 +1,6 @@
 # Quarantunes
+### What you're listening to during quarantine. 
 
-Ideas for design are on [Figma](https://www.figma.com/file/rIc7K4BUVFIRoYJblql8WM/Quarantunes?node-id=0%3A1)
+[Quarantunes](https://quarantune.netlify.app/) allows you to explore your top tracks, top artists, and statistics about your listening history over the last 6 months. Find out more about who you listened to during COVID-19, as well as the popularity, energy, tempo, and mood of your favorite tracks. Finally, Quarantunes creates two playlists for you, one which contains your top 50 tracks from the last six months, and one which contains 20 recommendations based on your most listened to songs.
 
----
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+[Check it out!](https://quarantune.netlify.app/)

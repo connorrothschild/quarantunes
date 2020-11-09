@@ -208,7 +208,7 @@ export default {
 				"https://accounts.spotify.com/authorize?client_id=" +
 				process.env.VUE_APP_CLIENT_ID +
 				"&redirect_uri=" +
-				process.env.VUE_APP_TESTING_REDIRECT_URI + // if testing: VUE_APP_TESTING_REDIRECT_URI
+				process.env.VUE_APP_REDIRECT_URI + // if testing: VUE_APP_TESTING_REDIRECT_URI
 				"&scope=user-top-read%20playlist-read-private%20playlist-modify-private%20playlist-modify-public%20user-read-recently-played&response_type=token&state=123";
 			return self.url;
 		},

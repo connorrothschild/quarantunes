@@ -1,5 +1,8 @@
 <template>
-	<div class="columns is-1 is-variable is-mobile" v-if="topArtists">
+	<div
+		class="columns is-1 is-variable is-mobile"
+		v-if="topArtists && topRecommendation"
+	>
 		<div class="column">
 			<ContentBox
 				:title="'Favorite'"
@@ -30,7 +33,7 @@
 				:type="'artist'"
 			/>
 		</div>
-		<div class="column">
+		<div class="column is-hidden-mobile">
 			<ContentBox
 				:title="'Deserves More Listens'"
 				:imageSrc="topRecommendation.images[0].url"
@@ -59,6 +62,7 @@ export default {
 		return {
 			topArtists: null,
 			topRecommendation: null, // FIXME: lots of undefined and null because of the order the app computes everything
+			recommendationsArray: null,
 		};
 	},
 	methods: {
@@ -73,16 +77,18 @@ export default {
 					Authorization: "Bearer " + self.token,
 				},
 			}).then(function (response) {
-				self.topArtists = response.items;
-				self.getRecommendations(response.items);
+				const topArtists = response.items;
+				self.topArtists = topArtists;
+				self.getRecommendations(topArtists);
 			});
 			return self.topArtists;
 		},
 		getRecommendations: function (originalArtists) {
 			var self = this;
 			const emptyArray = [];
+			// const index = 0;
 			const ids = originalArtists.map((d) => d.id);
-			ids.forEach((id) => {
+			ids.forEach((id, index) => {
 				$.ajax({
 					url: "https://api.spotify.com/v1/artists/" + id + "/related-artists",
 					type: "GET",
@@ -96,30 +102,40 @@ export default {
 					// Push those artists to our originally empty array, flatten it
 					emptyArray.push(artists);
 					const recommendationsArray = emptyArray.flat();
-					const recommendationsArtistNames = recommendationsArray.map(
-						(d) => d.name
-					);
-					// Find counts of each artist's name
-					const counts = _.map(
-						_.countBy(recommendationsArtistNames),
-						(val, key) => ({ name: key, count: val })
-					);
-					// Filter out artists they've been listening to
-					const notInMyArtists = counts.filter(
-						(i) => !originalArtists.map((d) => d.name).includes(i.name)
-					);
-					// Sort according to frequency, grab the first result
-					const sorted = notInMyArtists.sort((a, b) =>
-						d3.descending(a.count, b.count)
-					);
-					// console.log(sorted);
-					const topRecommendationName = sorted[0].name;
-					// Go back to the array of artists object and select the one that matches this name
-					self.topRecommendation = artists.filter((i) =>
-						topRecommendationName.includes(i.name)
-					)[0];
+
+					index++;
+
+					// When loop ends, do these computations
+					if (index === ids.length) {
+						const recommendationsArtistNames = recommendationsArray.map(
+							(d) => d.name
+						);
+						// Find counts of each artist's name
+						const counts = _.map(
+							_.countBy(recommendationsArtistNames),
+							(val, key) => ({ name: key, count: val })
+						);
+
+						// Filter out artists they've been listening to
+						const notInMyArtists = counts.filter(
+							(i) => !originalArtists.map((d) => d.name).includes(i.name)
+						);
+
+						// Sort according to frequency, grab the first result
+						const sorted = notInMyArtists.sort((a, b) =>
+							d3.descending(a.count, b.count)
+						);
+
+						const topRecommendationName = sorted[0].name;
+
+						// Go back to the array of artists object and select the one that matches this name
+						self.topRecommendation = recommendationsArray.filter((i) =>
+							topRecommendationName.includes(i.name)
+						)[0];
+
+						return self.topRecommendation;
+					}
 				});
-				return self.topRecommendation;
 			});
 		},
 	},
@@ -146,7 +162,7 @@ export default {
 			return popularitySorted[0];
 		},
 	},
-	mounted() {
+	created() {
 		this.getTopArtists();
 	},
 };

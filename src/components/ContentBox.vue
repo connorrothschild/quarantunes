@@ -1,7 +1,7 @@
 <template>
 	<div class="box">
 		<audio ref="player">
-			<source v-bind:src="currentSong" />
+			<source v-if="currentSong" v-bind:src="currentSong" />
 		</audio>
 		<!-- For artist types, return an image of the artist -->
 		<div v-if="type == 'artist'">
@@ -194,13 +194,13 @@ export default {
 
 @media screen and (max-width: 768px) {
 	.is-size-8-mobile {
-		font-size: 0.6rem !important;
+		font-size: 0.8rem !important;
 	}
 }
 
 @media screen and (max-width: 450px) {
 	.is-size-8-mobile {
-		font-size: 0.5rem !important;
+		font-size: 0.65rem !important;
 	}
 }
 

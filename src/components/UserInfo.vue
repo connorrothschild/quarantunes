@@ -17,13 +17,15 @@
 										<img
 											v-else
 											class="image is-rounded"
-											src="https://raw.githubusercontent.com/connorrothschild/quarantunes/master/src/images/placeholder.png"
+											src="https://raw.githubusercontent.com/connorrothschild/quarantunes/master/src/assets/placeholder.png"
 										/>
 									</figure>
 								</div>
 
-								<div class="media-content vertical-center-content">
-									<p class="is-size-6 has-text-weight-bold mr-">
+								<div
+									class="media-content vertical-center-content is-hidden-mobile"
+								>
+									<p class="is-size-6 has-text-weight-bold">
 										{{ name }}
 									</p>
 									<!-- <span class="icon has-text-white">
@@ -60,18 +62,24 @@
 					<div class="media-left">
 						<a :href="spotifyUrl" target="_blank">
 							<figure class="image is-96x96">
-								<img v-if="imageSrc" class="image is-rounded" :src="imageSrc" />
+								<img v-if="imageSrc" class="is-rounded" :src="imageSrc" />
 								<img
 									v-else
-									class="image is-rounded"
-									src="https://raw.githubusercontent.com/connorrothschild/quarantunes/master/src/images/placeholder.png"
+									class="is-rounded"
+									src="https://raw.githubusercontent.com/connorrothschild/quarantunes/master/src/assets/placeholder.png"
 								/>
 							</figure>
 						</a>
 					</div>
 					<div class="media-content">
-						<p class="heading is-size-6">User</p>
-						<p class="is-size-3 has-text-weight-bold">
+						<p class="heading is-size-6 is-size-6-desktop is-size-7-mobile">
+							Quarantunes
+						</p>
+						<!-- <p class="heading">quarantune.netlify.app</p> -->
+
+						<p
+							class="is-size-3 is-size-3-desktop is-size-4-mobile has-text-weight-bold"
+						>
 							{{ name }}
 						</p>
 					</div>

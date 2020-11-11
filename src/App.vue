@@ -1,18 +1,19 @@
 <template>
 	<div id="app">
 		<div v-if="!userInfo" class="full-page-centered">
-			<button class="button is-size-3 is-spotify">
+			<button class="button is-size-4 is-spotify">
 				<a :href="getUrl">Authorize Spotify</a>
 			</button>
 		</div>
 
-		<UserInfo
-			v-if="userInfo"
-			:spotifyUrl="userInfo.external_urls.spotify"
-			:imageSrc="userInfo.images[0].url"
-			:name="userInfo.display_name"
-		/>
-
+		<div class="userInfo">
+			<UserInfo
+				v-if="userInfo"
+				:spotifyUrl="userInfo.external_urls.spotify"
+				:imageSrc="userInfo.images[0].url"
+				:name="userInfo.display_name"
+			/>
+		</div>
 		<div v-if="userInfo" class="main-content">
 			<b-tabs class="spotify-tabs" v-model="activeTab">
 				<b-tab-item label="Overview">
@@ -97,12 +98,12 @@
 						v-if="topTracks.length > 0 && recommendedTracks.length > 0"
 					>
 						<div class="column">
-							<p class="heading subtitle is-size-5">Your top tracks:</p>
+							<p class="title is-size-4">Your top tracks:</p>
 							<div class="resp-container">
 								<iframe
 									class="resp-iframe"
 									:src="topTracksPlaylistId"
-									v-if="topTracks.length > 0 && activeTab == 2"
+									v-if="topTracks.length > 0"
 									frameborder="0"
 									allowtransparency="true"
 									allow="encrypted-media"
@@ -111,12 +112,12 @@
 							</div>
 						</div>
 						<div class="column">
-							<p class="heading subtitle is-size-5">Some recommendations:</p>
+							<p class="title is-size-4">Some recommendations:</p>
 							<div class="resp-container">
 								<iframe
 									class="resp-iframe"
 									:src="recommendedPlaylistId"
-									v-if="recommendedTracks.length > 0 && activeTab == 2"
+									v-if="recommendedTracks.length > 0"
 									frameborder="0"
 									allowtransparency="true"
 									allow="encrypted-media"
@@ -147,9 +148,6 @@ import { mapGetters } from "vuex";
 import "./styles/_variables.scss";
 
 Vue.use(VueAxios, axios);
-
-// TO DO: Add play buttons https://codepen.io/djodi/pen/NXJBRp/
-
 Vue.use(Buefy);
 
 export default {
@@ -208,7 +206,7 @@ export default {
 				"https://accounts.spotify.com/authorize?client_id=" +
 				process.env.VUE_APP_CLIENT_ID +
 				"&redirect_uri=" +
-				process.env.VUE_APP_REDIRECT_URI + // if testing: VUE_APP_TESTING_REDIRECT_URI
+				process.env.VUE_APP_TESTING_REDIRECT_URI + // if testing: VUE_APP_TESTING_REDIRECT_URI
 				"&scope=user-top-read%20playlist-read-private%20playlist-modify-private%20playlist-modify-public%20user-read-recently-played&response_type=token&state=123";
 			return self.url;
 		},
@@ -229,9 +227,6 @@ export default {
 	margin-top: 10px;
 }
 
-body {
-	font-family: Proxima Nova, Avenir, Helvetica, Arial, sans-serif;
-}
 a {
 	&:hover {
 		color: $spotify;
@@ -242,7 +237,7 @@ a {
 	background: transparent;
 }
 html {
-	padding: 2.5%;
+	padding: 1% 3% 1% 3%;
 	// if css unsupported:
 	background: rgb(24, 24, 24);
 	// spotify gradient

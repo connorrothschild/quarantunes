@@ -76,16 +76,16 @@ export default {
 				url:
 					"https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=medium_term",
 				type: "GET",
-				async: false,
+				async: true,
 				headers: {
 					Authorization: "Bearer " + this.token,
 				},
-				success: function (result) {
-					console.log("Successfully getting top tracks:", result);
-				},
-				error: function (e) {
-					console.log("Error getting top tracks:", e);
-				},
+				// success: function (result) {
+				// 	console.log("Successfully got top tracks:", result);
+				// },
+				// error: function (e) {
+				// 	console.log("Error getting top tracks:", e);
+				// },
 			}).then(function (response) {
 				const topTracks = response.items;
 				self.topTracks = response.items;
@@ -114,16 +114,16 @@ export default {
 			$.ajax({
 				url: "https://api.spotify.com/v1/audio-features/?ids=" + idString,
 				type: "GET",
-				async: false,
+				async: true,
 				headers: {
 					Authorization: "Bearer " + self.token,
 				},
-				success: function (result) {
-					console.log("Successfully got track info:", result);
-				},
-				error: function (e) {
-					console.log("Error getting track info:", e);
-				},
+				// success: function (result) {
+				// 	console.log("Successfully got track info:", result);
+				// },
+				// error: function (e) {
+				// 	console.log("Error getting track info:", e);
+				// },
 			}).then(function (response) {
 				const audioFeatures = response.audio_features;
 				// Merge audio features with other stuff, like song info
@@ -142,16 +142,16 @@ export default {
 				url:
 					"https://api.spotify.com/v1/recommendations?seed_tracks=" + idString,
 				type: "GET",
-				async: false,
+				async: true,
 				headers: {
 					Authorization: "Bearer " + self.token,
 				},
-				success: function (result) {
-					console.log("Successfully getting recommended tracks:", result);
-				},
-				error: function () {
-					console.log("Error getting recommended tracks");
-				},
+				// success: function (result) {
+				// 	console.log("Successfully got recommended tracks:", result);
+				// },
+				// error: function () {
+				// 	console.log("Error getting recommended tracks");
+				// },
 			}).then(function (response) {
 				const recommendedTracks = response.tracks;
 				self.recommendedTracks = recommendedTracks;
@@ -168,16 +168,16 @@ export default {
 			$.ajax({
 				url: "https://api.spotify.com/v1/me/player/recently-played",
 				type: "GET",
-				async: false,
+				async: true,
 				headers: {
 					Authorization: "Bearer " + self.token,
 				},
-				success: function (result) {
-					console.log("Successfully got recently played track:", result);
-				},
-				error: function (e) {
-					console.log("Error in getting recently played track:", e);
-				},
+				// success: function (result) {
+				// 	console.log("Successfully got recently played track:", result);
+				// },
+				// error: function (e) {
+				// 	console.log("Error in getting recently played track:", e);
+				// },
 			}).then(function (response) {
 				self.recentlyPlayed = response.items;
 			});
@@ -196,26 +196,26 @@ export default {
 					"https://api.spotify.com/v1/users/" + self.userInfo.id + "/playlists",
 				data: jsonData,
 				dataType: "json",
-				async: false,
+				async: true,
 				contentType: "application/json",
 				type: "POST",
 				headers: {
 					Authorization: "Bearer " + self.token,
 				},
 				success: function (result) {
-					console.log(
-						"Successfully created recommended tracks playlist:",
-						result
-					);
+					// console.log(
+					// 	"Successfully created recommended tracks playlist:",
+					// 	result
+					// );
 					self.$store.commit(
 						"setRecommendedPlaylistId",
 						"https://open.spotify.com/embed/playlist/" + result.id
 					);
 					self.recommendedPlaylistId = result.id;
 				},
-				error: function (e) {
-					console.log("Error creating recommended tracks playlist", e);
-				},
+				// error: function (e) {
+				// 	console.log("Error creating recommended tracks playlist", e);
+				// },
 			});
 			return self.recommendedPlaylistId;
 		},
@@ -232,23 +232,23 @@ export default {
 					"https://api.spotify.com/v1/users/" + self.userInfo.id + "/playlists",
 				data: jsonData,
 				dataType: "json",
-				async: false,
+				async: true,
 				contentType: "application/json",
 				type: "POST",
 				headers: {
 					Authorization: "Bearer " + self.token,
 				},
 				success: function (result) {
-					console.log("Successfully created top tracks playlist:", result);
+					// console.log("Successfully created top tracks playlist:", result);
 					self.$store.commit(
 						"setTopTracksPlaylistId",
 						"https://open.spotify.com/embed/playlist/" + result.id
 					);
 					self.topTracksPlaylistId = result.id;
 				},
-				error: function (e) {
-					console.log("Error creating top tracks playlist", e);
-				},
+				// error: function (e) {
+				// 	console.log("Error creating top tracks playlist", e);
+				// },
 			});
 			return self.topTracksPlaylistId;
 		},
@@ -267,12 +267,12 @@ export default {
 				headers: {
 					Authorization: "Bearer " + self.token,
 				},
-				success: function (result) {
-					console.log("Successfully populated top tracks playlist:", result);
-				},
-				error: function (e) {
-					console.log("Error populating top tracks playlist:", e);
-				},
+				// success: function (result) {
+				// 	console.log("Successfully populated top tracks playlist:", result);
+				// },
+				// error: function (e) {
+				// 	console.log("Error populating top tracks playlist:", e);
+				// },
 			});
 		},
 		populatePlaylistRecommendedTracks: function (recommendedTracks) {
@@ -289,15 +289,15 @@ export default {
 				headers: {
 					Authorization: "Bearer " + self.token,
 				},
-				success: function (result) {
-					console.log(
-						"Successfully populated recommended tracks playlist:",
-						result
-					);
-				},
-				error: function (e) {
-					console.log("Error populating recommended tracks playlist:", e);
-				},
+				// success: function (result) {
+				// 	console.log(
+				// 		"Successfully populated recommended tracks playlist:",
+				// 		result
+				// 	);
+				// },
+				// error: function (e) {
+				// 	console.log("Error populating recommended tracks playlist:", e);
+				// },
 			});
 		},
 		// Here, search through all user playlists
@@ -312,15 +312,15 @@ export default {
 				headers: {
 					Authorization: "Bearer " + self.token,
 				},
-				success: function (result) {
-					console.log("List of playlists:", result);
-				},
-				error: function (e) {
-					console.log("Error getting playlists:", e);
-				},
+				// success: function (result) {
+				// 	console.log("List of user's playlists:", result);
+				// },
+				// error: function (e) {
+				// 	console.log("Error getting playlists:", e);
+				// },
 			}).then(function (response) {
 				// Array of playlist titles
-				console.log(response.items.map((d) => d.name));
+				// console.log(response.items.map((d) => d.name));
 
 				// User already has "My Quarantunes" playlist:
 				const playlistExists = response.items.filter(
@@ -328,12 +328,12 @@ export default {
 				);
 
 				if (playlistExists.length > 0) {
-					console.log(
-						"The user already has " +
-							playlistExists.length +
-							" playlists titled My Quarantunes: ",
-						playlistExists
-					);
+					// console.log(
+					// 	"The user already has " +
+					// 		playlistExists.length +
+					// 		" playlists titled My Quarantunes: ",
+					// 	playlistExists
+					// );
 
 					// Which is the most populated?
 					const mostPopulated = playlistExists.sort((a, b) =>
@@ -342,7 +342,6 @@ export default {
 
 					// Save that playlist ID and return it; if a playlist exists, we should show it
 					const playlistExistsId = mostPopulated.id;
-					console.log(playlistExistsId);
 
 					self.$store.commit(
 						"setTopTracksPlaylistId",
@@ -350,17 +349,16 @@ export default {
 					);
 					self.topTracksPlaylistId = playlistExistsId;
 				} else {
-					console.log(
-						"User does not yet have a My Quarantunes playlist. Let's create one!"
-					);
+					// console.log(
+					// 	"User does not yet have a My Quarantunes playlist. Creating one."
+					// );
 					// Create playlist
 					self.newTopTracksPlaylist();
-					console.log("Created My Quarantunes");
-					console.log(self.topTracksPlaylistId);
+					// console.log("Created My Quarantunes");
 
 					// Populate top tracks playlist with these tracks
 					self.populatePlaylistTopTracks(topTracks);
-					console.log("Populated tracks");
+					// console.log("Populated tracks");
 				}
 			});
 		},
@@ -376,15 +374,15 @@ export default {
 				headers: {
 					Authorization: "Bearer " + self.token,
 				},
-				success: function (result) {
-					console.log("List of playlists:", result);
-				},
-				error: function (e) {
-					console.log("Error getting playlists:", e);
-				},
+				// success: function (result) {
+				// 	console.log("List of user's playlists:", result);
+				// },
+				// error: function (e) {
+				// 	console.log("Error getting playlists:", e);
+				// },
 			}).then(function (response) {
 				// Array of playlist titles
-				console.log(response.items.map((d) => d.name));
+				// console.log(response.items.map((d) => d.name));
 
 				// User already has "My Quarantunes Recommendations" playlist:
 				const playlistExists = response.items.filter(
@@ -392,12 +390,12 @@ export default {
 				);
 
 				if (playlistExists.length > 0) {
-					console.log(
-						"The user already has " +
-							playlistExists.length +
-							" playlists titled My Quarantunes Recommendations: ",
-						playlistExists
-					);
+					// console.log(
+					// 	"The user already has " +
+					// 		playlistExists.length +
+					// 		" playlists titled My Quarantunes Recommendations: ",
+					// 	playlistExists
+					// );
 
 					// Which is the most populated?
 					const mostPopulated = playlistExists.sort((a, b) =>
@@ -413,18 +411,16 @@ export default {
 					);
 					self.recommendedPlaylistId = playlistExistsId;
 				} else {
-					console.log(
-						"User does not yet have a My Quarantunes Recommendations playlist. Let's create one!"
-					);
+					// console.log(
+					// 	"User does not yet have a My Quarantunes Recommendations playlist. Creating one."
+					// );
 					// Create playlist
 					self.newRecommendationsPlaylist();
-					console.log("Created My Quarantunes Recommendations");
-					console.log(self.recommendedPlaylistId);
+					// console.log("Created My Quarantunes Recommendations");
 
 					// Populate recommended tracks playlist with these tracks
-					console.log(self.recommendedTracks);
 					self.populatePlaylistRecommendedTracks(self.recommendedTracks);
-					console.log("Populated tracks");
+					// console.log("Populated tracks");
 				}
 			});
 		},

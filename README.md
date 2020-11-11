@@ -1,5 +1,4 @@
-<img src="https://raw.githubusercontent.com/connorrothschild/quarantunes/master/src/assets/logo.png" align="right"
-     alt="Quarantunes Logo" width="100" height="100">
+<a href="https://quarantune.netlify.app/" target="_blank"><img src="https://raw.githubusercontent.com/connorrothschild/quarantunes/master/images/logo.png" align="right" alt="Quarantunes Logo" width="100" height="100"></a>
 # Quarantunes
 
 ### What you're listening to during quarantine. 
@@ -8,9 +7,9 @@
 
 [Quarantunes](https://quarantune.netlify.app/) allows you to explore your top tracks, top artists, and statistics about your listening history over the last 6 months. Find out more about who you listened to during COVID-19, as well as the popularity, energy, tempo, and mood of your favorite tracks. Finally, Quarantunes creates two playlists for you, one which contains your top 50 tracks from the last six months, and one which contains 20 recommendations based on your most listened to songs.
 
-![iPhone Mockup](https://raw.githubusercontent.com/connorrothschild/quarantunes/master/src/assets/iPhone.png) ![iPad Mockup](https://raw.githubusercontent.com/connorrothschild/quarantunes/master/src/assets/iPad.png)
+[![Side by side of iPhone and iPad mockups](https://raw.githubusercontent.com/connorrothschild/quarantunes/master/images/SideBySide.png)](https://quarantune.netlify.app/)
 
-![Macbook Mockup](https://raw.githubusercontent.com/connorrothschild/quarantunes/master/src/assets/Macbook.png)
+[![Macbook mockup](https://raw.githubusercontent.com/connorrothschild/quarantunes/master/images/Macbook.png)](https://quarantune.netlify.app/)
 
 [Check it out!](https://quarantune.netlify.app/)
 

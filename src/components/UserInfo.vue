@@ -17,7 +17,7 @@
 										<img
 											v-else
 											class="image is-rounded"
-											src="https://raw.githubusercontent.com/connorrothschild/quarantunes/master/src/assets/placeholder.png"
+											src="https://raw.githubusercontent.com/connorrothschild/quarantunes/master/images/placeholder.png"
 										/>
 									</figure>
 								</div>
@@ -66,7 +66,7 @@
 								<img
 									v-else
 									class="is-rounded"
-									src="https://raw.githubusercontent.com/connorrothschild/quarantunes/master/src/assets/placeholder.png"
+									src="https://raw.githubusercontent.com/connorrothschild/quarantunes/master/images/placeholder.png"
 								/>
 							</figure>
 						</a>

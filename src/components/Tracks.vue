@@ -33,7 +33,7 @@
 				:type="'track'"
 			/>
 		</div>
-		<div class="column">
+		<div class="column is-hidden-mobile">
 			<ContentBox
 				:title="'Most Recently Played'"
 				:imageSrc="mostRecentTrack.track.album.images[0].url"

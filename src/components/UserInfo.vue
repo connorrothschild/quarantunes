@@ -14,11 +14,6 @@
 											class="image is-rounded"
 											:src="imageSrc"
 										/>
-										<img
-											v-else
-											class="image is-rounded"
-											src="https://raw.githubusercontent.com/connorrothschild/quarantunes/master/images/placeholder.png"
-										/>
 									</figure>
 								</div>
 

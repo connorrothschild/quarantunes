@@ -188,8 +188,8 @@ export default {
 			let jsonData = JSON.stringify({
 				name: "My Quarantunes Recommendations",
 				description:
-					"Music for the next pandemic. Don't like these recommendations? Delete or rename this playlist and visit quarantune.netlify.app.",
-				public: true,
+					"Music for the next pandemic. Want other recommendations? Delete or rename this playlist and visit quarantune.netlify.app.",
+				public: false,
 			});
 			$.ajax({
 				url:
@@ -219,13 +219,37 @@ export default {
 			});
 			return self.recommendedPlaylistId;
 		},
+		recommendationsPlaylistCover: function () {
+			var self = this;
+			let img =
+				"iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==";
+			$.ajax({
+				url:
+					"https://api.spotify.com/v1/playlists/" +
+					self.recommendedPlaylistId +
+					"/images",
+				async: false,
+				type: "PUT",
+				headers: {
+					Authorization: "Bearer " + self.token,
+					"Content-Type": "image/jpeg",
+				},
+				body: img,
+				success: function (response) {
+					console.log(response);
+				},
+				error: function (e) {
+					console.log(e);
+				},
+			});
+		},
 		newTopTracksPlaylist: function () {
 			var self = this;
 			let jsonData = JSON.stringify({
 				name: "My Quarantunes",
 				description:
 					"What I'm listening to this pandemic. Created at quarantune.netlify.app",
-				public: true,
+				public: false,
 			});
 			$.ajax({
 				url:
@@ -416,6 +440,8 @@ export default {
 					// );
 					// Create playlist
 					self.newRecommendationsPlaylist();
+					// Add cover
+					self.recommendationsPlaylistCover();
 					// console.log("Created My Quarantunes Recommendations");
 
 					// Populate recommended tracks playlist with these tracks

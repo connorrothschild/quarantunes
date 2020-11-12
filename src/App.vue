@@ -10,7 +10,11 @@
 			<UserInfo
 				v-if="userInfo"
 				:spotifyUrl="userInfo.external_urls.spotify"
-				:imageSrc="userInfo.images[0].url"
+				:imageSrc="
+					userInfo.images[0] != undefined
+						? userInfo.images[0].url
+						: placeholderImage
+				"
 				:name="userInfo.display_name"
 			/>
 		</div>
@@ -164,6 +168,8 @@ export default {
 			url: null,
 			token: null,
 			userInfo: null,
+			placeholderImage:
+				"https://raw.githubusercontent.com/connorrothschild/quarantunes/master/images/placeholder.png",
 		};
 	},
 	methods: {
@@ -206,8 +212,8 @@ export default {
 				"https://accounts.spotify.com/authorize?client_id=" +
 				process.env.VUE_APP_CLIENT_ID +
 				"&redirect_uri=" +
-				process.env.VUE_APP_REDIRECT_URI + // if testing: VUE_APP_TESTING_REDIRECT_URI
-				"&scope=user-top-read%20playlist-read-private%20playlist-modify-private%20playlist-modify-public%20user-read-recently-played&response_type=token&state=123";
+				process.env.VUE_APP_TESTING_REDIRECT_URI + // if testing: VUE_APP_TESTING_REDIRECT_URI
+				"&scope=user-top-read%20ugc-image-upload%20playlist-read-private%20playlist-modify-private%20playlist-modify-public%20user-read-recently-played&response_type=token&state=123";
 			return self.url;
 		},
 	},

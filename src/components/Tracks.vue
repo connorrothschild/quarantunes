@@ -188,7 +188,7 @@ export default {
 			let jsonData = JSON.stringify({
 				name: "My Quarantunes Recommendations",
 				description:
-					"Music for the next pandemic. Created at quarantune.netlify.app",
+					"Music for the next pandemic. Don't like these recommendations? Delete or rename this playlist and visit quarantune.netlify.app.",
 				public: true,
 			});
 			$.ajax({
@@ -196,7 +196,7 @@ export default {
 					"https://api.spotify.com/v1/users/" + self.userInfo.id + "/playlists",
 				data: jsonData,
 				dataType: "json",
-				async: true,
+				async: false, // MUST BE FALSE
 				contentType: "application/json",
 				type: "POST",
 				headers: {
@@ -232,7 +232,7 @@ export default {
 					"https://api.spotify.com/v1/users/" + self.userInfo.id + "/playlists",
 				data: jsonData,
 				dataType: "json",
-				async: true,
+				async: false, // MUST BE FALSE
 				contentType: "application/json",
 				type: "POST",
 				headers: {

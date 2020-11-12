@@ -1,9 +1,9 @@
 <template>
 	<div id="app">
 		<div v-if="!userInfo" class="full-page-centered">
-			<button class="button is-size-4 is-spotify">
-				<a :href="getUrl">Authorize Spotify</a>
-			</button>
+			<a :href="getUrl">
+				<button class="button is-size-4 is-spotify">Authorize Spotify</button>
+			</a>
 		</div>
 
 		<div class="userInfo">

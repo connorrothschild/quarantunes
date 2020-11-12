@@ -268,12 +268,12 @@ export default {
 					"Content-Type": "image/jpeg",
 				},
 				data: img,
-				success: function (response) {
-					console.log(response);
-				},
-				error: function (e) {
-					console.log(e);
-				},
+				// success: function (response) {
+				// 	console.log(response);
+				// },
+				// error: function (e) {
+				// 	console.log(e);
+				// },
 			});
 		},
 		topTracksPlaylistCover: function () {
@@ -292,12 +292,12 @@ export default {
 					"Content-Type": "image/jpeg",
 				},
 				data: img,
-				success: function (response) {
-					console.log(response);
-				},
-				error: function (e) {
-					console.log(e);
-				},
+				// success: function (response) {
+				// 	console.log(response);
+				// },
+				// error: function (e) {
+				// 	console.log(e);
+				// },
 			});
 		},
 		populatePlaylistTopTracks: function (topTracks) {

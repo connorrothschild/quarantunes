@@ -335,4 +335,16 @@ p {
 		}
 	}
 }
+
+// Tooltips on tab 2 for tablet size devices
+@media (min-width: 769px) and (max-width: 1096px) {
+	.b-tooltip .tooltip-content {
+		width: 150px !important;
+		font-size: 0.75rem !important;
+	}
+}
+
+.b-tooltip .tooltip-content {
+	text-align: left !important;
+}
 </style>

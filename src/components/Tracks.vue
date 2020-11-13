@@ -2,6 +2,7 @@
 	<div class="columns is-1 is-variable is-mobile" v-if="topTracks">
 		<div class="column">
 			<ContentBox
+				v-if="favoriteTrack"
 				:title="'Favorite'"
 				:imageSrc="favoriteTrack.album.images[0].url"
 				:previewUrl="favoriteTrack.preview_url"
@@ -13,6 +14,7 @@
 		</div>
 		<div class="column">
 			<ContentBox
+				v-if="undergroundTrack"
 				:title="'Most Underground'"
 				:spotifyUrl="undergroundTrack.external_urls.spotify"
 				:imageSrc="undergroundTrack.album.images[0].url"
@@ -24,6 +26,7 @@
 		</div>
 		<div class="column">
 			<ContentBox
+				v-if="mainstreamTrack"
 				:title="'Most Mainstream'"
 				:spotifyUrl="mainstreamTrack.external_urls.spotify"
 				:imageSrc="mainstreamTrack.album.images[0].url"
@@ -35,6 +38,7 @@
 		</div>
 		<div class="column is-hidden-mobile">
 			<ContentBox
+				v-if="recentlyPlayed"
 				:title="'Most Recently Played'"
 				:imageSrc="mostRecentTrack.track.album.images[0].url"
 				:previewUrl="mostRecentTrack.track.preview_url"

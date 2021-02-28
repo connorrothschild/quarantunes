@@ -1,9 +1,19 @@
 <template>
 	<div id="app">
 		<div v-if="!userInfo" class="full-page-centered">
+			<p class="title is-size-3 has-text-weight-bolder">
+				Welcome to Quarantunes!
+			</p>
+			<p class="title is-size-4 has-text-weight-medium">
+				In order to check your listening history, I'll need you to log in:
+			</p>
 			<a :href="getUrl">
 				<button class="button is-size-4 is-spotify">Authorize Spotify</button>
 			</a>
+			<p class="has-text-weight-light mt-4">
+				(Or check out the project on
+				<a href="https://github.com/connorrothschild/quarantunes">GitHub</a>)
+			</p>
 		</div>
 
 		<div class="userInfo">
@@ -277,13 +287,13 @@ p {
 
 .full-page-centered {
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	height: 80vh;
-
-	a:hover {
-		color: black;
-	}
+	max-width: 768px;
+	margin: 0 auto;
+	text-align: center;
 }
 
 // responsive iframe https://blog.theodo.com/2018/01/responsive-iframes-css-trick/
